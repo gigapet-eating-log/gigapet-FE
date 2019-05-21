@@ -25,8 +25,14 @@ import {
 
 const initialState = {
   foodEntries: [],
+  currentUserID: "",
   children: [],
-  currentChild: {},
+  currentChild: {
+    "id": "1",
+    "name": "Billy",
+    "calorieGoal": "20000",
+    "parentId":"2"
+  },
   pending: {
     login: false,
     register: false,
@@ -46,9 +52,10 @@ const rootReducer = (state = initialState, action) => {
     case SIGNUP_START:
       return {
         ...state,
-        isLoggingIn: true
+        isLoggingIn: true,
+        error: false,
+        errorMessage: ""
       };
-
     case SIGNUP_SUCCESS:
       console.log(action.payload);
       return {
@@ -56,7 +63,6 @@ const rootReducer = (state = initialState, action) => {
         isLoggingIn: false,
         signUpSuccessMessage: action.payload.message
       };
-
     case SIGNUP_FAIL:
       console.log(action.payload);
       return {
@@ -65,30 +71,35 @@ const rootReducer = (state = initialState, action) => {
         error: true,
         errorMessage: action.payload
       };
-
     case LOGIN_START:
       console.log("LOGIN_START console");
       return {
         ...state,
-        isLoggingIn: true
-      };
-
-    case LOGIN_SUCCESS:
-      console.log("LOGIN_SUCCESS console");
-      console.log(action.payload);
-
-      return {
-        ...state,
-        isLoggingIn: false,
-        token: action.payload.token,
+        pending: {
+          ...state.pending,
+          login: true,
+        },
         error: false,
         errorMessage: ""
       };
-
+    case LOGIN_SUCCESS:
+      console.log("LOGIN_SUCCESS console");
+      console.log(action.payload);
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          login: false
+        },
+        currentUserID: action.payload.id
+      };
     case LOGIN_FAIL:
       return {
         ...state,
-        isLoggingIn: false,
+        pending: {
+          ...state.pending,
+          login: false
+        },
         error: true,
         errorMessage: action.payload
       };

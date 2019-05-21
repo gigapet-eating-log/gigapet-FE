@@ -88,6 +88,7 @@ export const postFood = newEntry => dispatch => {
   axios
     .post("https://giga-back-end.herokuapp.com/api/app/addfood", newEntry)
     .then(res => {
+      console.log("result:", res)
       dispatch({ type: ENTRY_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {

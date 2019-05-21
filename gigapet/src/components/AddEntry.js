@@ -100,10 +100,21 @@ class AddEntry extends React.Component {
     this.state = {
       input: {
         food: "",
-        date: moment().format('YYYY-MM-DD'),
+        calories: "",
+        date: "",
         category: ""
       },
     };
+  }
+
+  componentDidMount() {
+    const date = moment().format('YYYY-MM-DD')
+    this.setState({
+      input: {
+        ...this.state.input,
+        date: date
+      }
+    })
   }
 
   changeHandler = ev => {
@@ -112,8 +123,19 @@ class AddEntry extends React.Component {
 
   submitHandler = ev => {
     ev.preventDefault();
-    this.props.postFood(this.state.input)
-    this.setState({ input: { name: "", date: moment().format('yyyy-mm-dd'), height: "" } })
+    const newEntry = {
+      "name": this.props.currentChild.name,
+      "mealTime": "Lunch",
+      "foodType": this.state.input.category,
+      "foodName": this.state.input.food,
+      "parentId": this.state.currentUserID,
+      "calories": this.state.input.calories,
+      "date": this.state.input.date,
+      "childId": this.props.currentChild.id
+    }
+    console.log(newEntry)
+    this.props.postFood(newEntry)
+    this.setState({ input: { name: "", date: moment().format('YYYY-MM-DD'), height: "" } })
   }
 
   render() {
@@ -121,15 +143,6 @@ class AddEntry extends React.Component {
     <FormSC onSubmit={this.submitHandler}>
       <TitleSC>ADD SOME FOOD</TitleSC>
       <InputBoxSC spellCheck="false" required>
-        <SelectSC placeholder={!this.state.input.category} name="category" value={this.state.input.category} onChange={this.changeHandler} required>
-          {}<OptionSC hidden>Category</OptionSC>
-          <OptionSC value="vegetables">Vegetables</OptionSC>
-          <OptionSC value="fruits">Fruits</OptionSC>
-          <OptionSC value="grains">Grains</OptionSC>
-          <OptionSC value="dairy">Dairy</OptionSC>
-          <OptionSC value="proteins">Proteins</OptionSC>
-          <OptionSC value="junk">Junk</OptionSC>
-        </SelectSC>
         <InputSC
           type="text"
           name="food"
@@ -147,6 +160,13 @@ class AddEntry extends React.Component {
           <OptionSC value="junk">Junk</OptionSC>
         </SelectSC>
         <InputSC
+          type="text"
+          name="calories"
+          placeholder="Calories"
+          value={this.state.input.calories}
+          onChange={this.changeHandler}
+        />
+        <InputSC
           type="date"
           name="date"
           value={this.state.input.date}
@@ -155,7 +175,7 @@ class AddEntry extends React.Component {
         />
       </InputBoxSC>
       <ButtonBoxSC>
-        <InputButtonSC type="submit">
+        <InputButtonSC onClick={this.submitHandler}>
           Send the pupper food
         </InputButtonSC>
       </ButtonBoxSC>
@@ -164,7 +184,12 @@ class AddEntry extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  currentChild: state.currentChild,
+  currentUserID: state.currentUserID
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { postFood }
 )(AddEntry);
