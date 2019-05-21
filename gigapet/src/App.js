@@ -5,18 +5,21 @@ import AuthPage from './components/AuthPage';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
-
+import TopBar from './components/TopBar';
+import AddEntry from './components/AddEntry';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
     <div className="App">
-      <h1>TESTING FROM APP</h1>
       <Router>
-
-        <Route  path='/' component={AuthPage} />
+        <TopBar />
+        <Route  path='/auth' component={AuthPage} />
         <Route  path='/login' component={LogIn} />
         <Route  path='/signUp' component={SignUp} />
-        <Route exact path='/home' component={Home} />
+        <PrivateRoute exact path='/' component={Home} />
+        <PrivateRoute exact path="/add-entry" component={AddEntry}/>
+        <PrivateRoute exact path="/history" component={History}/>
       </Router>
     </div>
   );

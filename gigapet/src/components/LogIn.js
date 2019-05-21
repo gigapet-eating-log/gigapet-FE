@@ -28,12 +28,12 @@ class LogIn extends Component {
 
     login = event => {
         event.preventDefault();
-        this.props.login(this.state.credentials);
-        if (localStorage.getItem('token')) {
-            this.props.history.push('/home')
+        this.props.login(this.state.credentials)
+          .then(() => {
+            this.props.history.push("./main");
+            window.location.reload();
+          })
         }
-    }
-
 
     render() {
         return (

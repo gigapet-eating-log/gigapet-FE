@@ -27,13 +27,12 @@ class SignUp extends Component {
     }
 
     signUp = event => {
-        console.log(localStorage.getItem('token'));
-
         event.preventDefault();
-        this.props.signUp(this.state.credentials);
-
-        // if (this.props.signUpSuccess) {
-        //     this.props.history.push('/login')}
+        this.props.signUp(this.state.credentials)
+          .then(() => {
+            this.props.history.push("./");
+            window.location.reload()
+          })
     }
 
 
@@ -76,7 +75,7 @@ class SignUp extends Component {
                                 onChange={this.handleChanges} />
                         </Col>
                     </FormGroup>
-                    <button onClick={this.signUp}> <i class="fas fa-paw fa"> Adopt A Friend</i></button>
+                    <button type="submit"> <i class="fas fa-paw fa"> Adopt A Friend</i></button>
                 </Form>
                 {/* <div> {this.props.error ? (`${this.props.errorMessage}`) : ('')}</div> */}
             </div>
@@ -85,7 +84,6 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => ({
-    signUpSuccess: state.signUpSuccess,
     error: state.error,
     errorMessage: state.errorMessage
 });
