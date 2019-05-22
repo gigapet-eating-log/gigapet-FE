@@ -1,10 +1,11 @@
 import {
-  SIGNUP_START,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAIL,
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SIGNUP_START,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
+  LOGOUT,
   ENTRY_GET_START,
   ENTRY_GET_SUCCESS,
   ENTRY_GET_FAIL,
@@ -28,13 +29,26 @@ import {
 
 const initialState = {
   foodEntries: [],
-  currentUserID: 2,
-  children: [],
+  currentUserID: "",
+  children: [
+    {
+      id: "1",
+      name: "Billy",
+      calorieGoal: "20000",
+      parentId: "2"
+    },
+    {
+      id: "2",
+      name: "Jenny",
+      calorieGoal: "20000",
+      parentId: "2"
+    }
+  ],
   currentChild: {
-    "id": "1",
-    "name": "Billy",
-    "calorieGoal": "20000",
-    "parentId":"2"
+    // id: "1",
+    // name: "Billy",
+    // calorieGoal: "20000",
+    // parentId: "2"
   },
   pending: {
     login: false,
@@ -52,35 +66,13 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SIGNUP_START:
-      return {
-        ...state,
-        isLoggingIn: true,
-        error: false,
-        errorMessage: ""
-      };
-    case SIGNUP_SUCCESS:
-      console.log(action.payload);
-      return {
-        ...state,
-        isLoggingIn: false,
-        signUpSuccessMessage: action.payload.message
-      };
-    case SIGNUP_FAIL:
-      console.log(action.payload);
-      return {
-        ...state,
-        isLoggingIn: false,
-        error: true,
-        errorMessage: action.payload
-      };
     case LOGIN_START:
       console.log("LOGIN_START console");
       return {
         ...state,
         pending: {
           ...state.pending,
-          login: true,
+          login: true
         },
         error: false,
         errorMessage: ""
@@ -103,6 +95,28 @@ const rootReducer = (state = initialState, action) => {
           ...state.pending,
           login: false
         },
+        error: true,
+        errorMessage: action.payload
+      };
+    case SIGNUP_START:
+      return {
+        ...state,
+        isLoggingIn: true,
+        error: false,
+        errorMessage: ""
+      };
+    case SIGNUP_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        isLoggingIn: false,
+        signUpSuccessMessage: action.payload.message
+      };
+    case SIGNUP_FAIL:
+      console.log(action.payload);
+      return {
+        ...state,
+        isLoggingIn: false,
         error: true,
         errorMessage: action.payload
       };
@@ -241,7 +255,7 @@ const rootReducer = (state = initialState, action) => {
         },
         error: action.payload
       };
-      
+
     case CHILDREN_POST_START:
       return {
         ...state,

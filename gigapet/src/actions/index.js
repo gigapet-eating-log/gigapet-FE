@@ -60,6 +60,12 @@ export const login = credentials => dispatch => {
     });
 };
 
+export const LOGOUT = "LOGOUT";
+
+export const logout = () => {
+  return {type: LOGOUT}
+};
+
 export const [ENTRY_GET_START, ENTRY_GET_SUCCESS, ENTRY_GET_FAIL] = [
   "ENTRY_GET_START",
   "ENTRY_GET_SUCCESS",
@@ -167,7 +173,7 @@ export const postChild = newChild => dispatch => {
       dispatch({ type: ENTRY_POST_SUCCESS });
     })
     .then(() => {
-      
+
     })
     .catch(err => {
       dispatch({ type: ENTRY_POST_FAIL, payload: err });
@@ -175,3 +181,10 @@ export const postChild = newChild => dispatch => {
 };
 
 export const SET_CURRENT_CHILD = "SET_CURRENT_CHILD";
+
+export const setCurrentChild = (selectedChild) => {
+  return {
+    type: SET_CURRENT_CHILD,
+    payload: selectedChild
+  }
+}

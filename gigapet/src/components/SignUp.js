@@ -31,6 +31,7 @@ class SignUp extends Component {
         this.props.signUp(this.state.credentials)
           .then(() => {
             this.props.history.push("./");
+            window.location.reload();
           })
     }
 

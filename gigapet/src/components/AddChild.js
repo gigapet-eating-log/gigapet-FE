@@ -31,12 +31,18 @@ class AddChild extends Component {
       calorieGoal: this.state.input.calorieGoal
     };
     this.props.postChild(newChild);
+    this.setState({
+      input: {
+        name: "",
+        calorieGoal: ""
+      }
+    })
   };
 
   render() {
     return (
       <div>
-        ADD YO KID
+        <h2>Add a child</h2>
         <Form onSubmit={this.addChild}>
           <FormGroup row>
             <Label for="name" sm={2}>
