@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { getFood } from '../actions';
+import FoodEntries from './FoodEntries';
+import TotalCalories from './TotalCalories';
 
 class SortDateFormSpecific extends Component {
     constructor() {
@@ -10,40 +13,35 @@ class SortDateFormSpecific extends Component {
         }
     }
 
-      changeHandlerSpecific = ev => {
-          this.setState({
-                [ev.target.name]: ev.target.value
-          })
+    changeHandlerSpecific = ev => {
+        this.setState({
+            [ev.target.name]: ev.target.value
+        })
 
-          console.log(this.state);
-      }
+        console.log(this.state);
+    }
 
-      sortSpecific = event => {
-          event.preventDefault();
-          console.log(this.state);
-          const range = {
-            name:this.props.currentChild, //what is it on state?
-            parentId: localStorage.getItem('currentUserId'),
-            dateStart:this.state.dateOne,
-            dateEnd: this.state.dateTwo
-          }
+    getFood = event => {
+        event.preventDefault();
+        console.log(this.state);
+        const childId = this.props.currentChild
 
-          this.props.getFoodByRange(range);
-      }
+        this.props.getFood(childId);
+    }
 
     render() {
         return (
             <div className='specific-date'>
 
-                <form onSubmit={this.sortSpecific}> Find Caloric Intake from 
+                <form onSubmit={this.getFood}> Find Caloric Intake from
 
                     <input
                         type="date"
                         name="dateOne"
                         value={this.state.dateOne}
                         onChange={this.changeHandlerSpecific}
-                        style={{margin: "0 10px"}}
-                     
+                        style={{ margin: "0 10px" }}
+
                     />
                     to
                     <input
@@ -51,14 +49,27 @@ class SortDateFormSpecific extends Component {
                         name="dateTwo"
                         value={this.state.dateTwo}
                         onChange={this.changeHandlerSpecific}
-                        style={{marginLeft: "10px"}}
-                       
-                    /> 
+                        style={{ marginLeft: "10px" }}
+
+                    />
                     <button type="submit">Find</button>
                 </form>
+
+                <div className='food-date-wrapper'>
+                    <TotalCalories foodEntries={this.props.foodEntries} />
+                    <div className='food-entries-wrapper'>
+                        {this.props.foodEntries.map(entry => {
+                            return <FoodEntries key={entry.food} entry={entry} />
+                        })}
+                    </div>
+                </div>
             </div>
         );
     }
 }
 
-export default connect(null, {getFoodByRange})(SortDateFormSpecific);
+const mapStateToProps = state => ({
+    foodEntries: state.foodEntries,
+});
+
+export default connect(mapStateToProps, { getFood })(SortDateFormSpecific);

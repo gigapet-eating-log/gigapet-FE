@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosWithAuth from '../axiosWithAuth';
 
 export const [SIGNUP_START, SIGNUP_SUCCESS, SIGNUP_FAIL] = [
   "SIGNUP_START",
@@ -59,16 +60,18 @@ export const login = credentials => dispatch => {
     });
 };
 
+// Getting food entries and sorting through them //////////////////////////////////
+
 export const [ENTRY_GET_START, ENTRY_GET_SUCCESS, ENTRY_GET_FAIL] = [
   "ENTRY_GET_START",
   "ENTRY_GET_SUCCESS",
   "ENTRY_GET_FAIL"
 ];
 
-export const getFood = () => dispatch => {
+export const getFood = childId => dispatch => {
   dispatch({ type: ENTRY_GET_START });
-  axios
-    .get("https://giga-back-end.herokuapp.com/api/app/addfood")
+  axiosWithAuth()
+    .get(`https://giga-back-end.herokuapp.com/api/app/getfood/${childId}`)
     .then(res => {
       dispatch({ type: ENTRY_GET_SUCCESS, payload: res.data });
     })
@@ -76,6 +79,8 @@ export const getFood = () => dispatch => {
       dispatch({ type: ENTRY_GET_FAIL, payload: err });
     });
 };
+
+///////////////////////////////////////////////////////////////////////////////////
 
 export const [ENTRY_POST_START, ENTRY_POST_SUCCESS, ENTRY_POST_FAIL] = [
   "ENTRY_POST_START",

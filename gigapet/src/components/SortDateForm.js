@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {getFood} from '../actions';
+import FoodEntries from './FoodEntries';
+import TotalCalories from './TotalCalories';
 
 class SortDateForm extends Component {
     constructor() {
@@ -16,22 +19,18 @@ class SortDateForm extends Component {
         console.log(this.state);
       };
 
-      getFoodByDate = event => {
+      getFood = event => {
           event.preventDefault();
           console.log(this.state);
-          const info = {
-              date: this.state,
-              parentId: localStorage.getItem('currentUserId'),
-              childId: localStorage.getItem('currentChild') // where is childId?
-          }
-          console.log(info);
-          this.props.getFoodByDate(info)
+          const childId = this.props.currentChild
+          
+          this.props.getFood(childId);
       }
 
     render() {
         return (
             <div className='single-date'>
-                <form onSubmit={this.getFoodByDate}> Find Caloric Intake by Day 
+                <form onSubmit={this.getFood}> Find Caloric Intake by Day 
 
                     <input
                         type="date"
@@ -43,9 +42,25 @@ class SortDateForm extends Component {
                     />
                     <button type="submit">Find</button>
                 </form>
+
+                <div className='food-date-wrapper'>
+                    <TotalCalories foodEntries={this.props.foodEntries} />
+                    <div className='food-entries-wrapper'>
+                        {this.props.foodEntries.filter(entry => {
+                            return entry.date === this.state.singleDate
+                        }).map(entry => {
+                            return <FoodEntries key={entry.food} entry={entry} />
+                        })}
+                    </div>
+                </div>
+
             </div>
         );
     }
 }
 
-export default connect(null, {getFoodByDate})(SortDateForm);
+const mapStateToProps = state => ({
+    foodEntries: state.foodEntries,
+  });
+
+export default connect(mapStateToProps, {getFood})(SortDateForm);
