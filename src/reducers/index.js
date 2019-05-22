@@ -5,7 +5,6 @@ import {
   SIGNUP_START,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
-  LOGOUT,
   ENTRY_GET_START,
   ENTRY_GET_SUCCESS,
   ENTRY_GET_FAIL,
@@ -29,8 +28,7 @@ import {
 
 const initialState = {
   foodEntries: [],
-  currentUserID: "",
-  children: [
+  kids: [
     {
       id: "1",
       name: "Billy",
@@ -45,10 +43,10 @@ const initialState = {
     }
   ],
   currentChild: {
-    // id: "1",
-    // name: "Billy",
-    // calorieGoal: "20000",
-    // parentId: "2"
+    id: "1",
+    name: "Billy",
+    calorieGoal: "20000",
+    parentId: "2"
   },
   pending: {
     login: false,
@@ -67,7 +65,6 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_START:
-      console.log("LOGIN_START console");
       return {
         ...state,
         pending: {
@@ -78,15 +75,12 @@ const rootReducer = (state = initialState, action) => {
         errorMessage: ""
       };
     case LOGIN_SUCCESS:
-      console.log("LOGIN_SUCCESS console");
-      console.log(action.payload);
       return {
         ...state,
         pending: {
           ...state.pending,
           login: false
         },
-        currentUserID: action.payload.id
       };
     case LOGIN_FAIL:
       return {
@@ -240,7 +234,7 @@ const rootReducer = (state = initialState, action) => {
     case CHILDREN_GET_SUCCESS:
       return {
         ...state,
-        children: action.payload,
+        kids: action.payload,
         pending: {
           ...state.pending,
           getChildren: false

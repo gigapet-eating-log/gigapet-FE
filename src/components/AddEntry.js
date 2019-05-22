@@ -153,12 +153,12 @@ class AddEntry extends React.Component {
         />
         <SelectSC placeholder={!this.state.input.category} name="category" value={this.state.input.category} onChange={this.changeHandler} required>
           <OptionSC hidden>Category</OptionSC>
-          <OptionSC value="Vegetables">Vegetables</OptionSC>
-          <OptionSC value="Fruits">Fruits</OptionSC>
-          <OptionSC value="wholeGrain">Grains</OptionSC>
-          <OptionSC value="Dairy">Dairy</OptionSC>
-          <OptionSC value="Proteins">Proteins</OptionSC>
-          <OptionSC value="Junk">Junk</OptionSC>
+          <OptionSC value="vegetables">Vegetables</OptionSC>
+          <OptionSC value="fruits">Fruits</OptionSC>
+          <OptionSC value="grains">Grains</OptionSC>
+          <OptionSC value="dairy">Dairy</OptionSC>
+          <OptionSC value="proteins">Proteins</OptionSC>
+          <OptionSC value="junk">Junk</OptionSC>
         </SelectSC>
         <InputSC
           type="text"

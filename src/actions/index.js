@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosWithAuth from "../axiosWithAuth";
 
 export const [SIGNUP_START, SIGNUP_SUCCESS, SIGNUP_FAIL] = [
   "SIGNUP_START",
@@ -23,8 +24,8 @@ export const signUp = credentials => dispatch => {
           loginInput
         )
         .then(res => {
-          console.log(res);
-          localStorage.setItem("token", res.data);
+          console.log(res)
+          localStorage.setItem("token", res.data.token);
           localStorage.setItem("currentUserId", res.data.id);
           dispatch({ type: LOGIN_SUCCESS, payload: res.data });
         })
@@ -50,7 +51,7 @@ export const login = credentials => dispatch => {
   return axios
     .post("https://giga-back-end.herokuapp.com/api/users/login", credentials)
     .then(res => {
-      localStorage.setItem("token", res.data);
+      localStorage.setItem("token", res.data.token);
       localStorage.setItem("currentUserId", res.data.id);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
@@ -146,10 +147,11 @@ export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
   "CHILDREN_GET_FAIL"
 ];
 
-export const getChildren = ParentID => dispatch => {
+export const getChildren = id => dispatch => {
+  console.log(id)
   dispatch({ type: CHILDREN_GET_START });
   axios
-    .get("https://giga-back-end.herokuapp.com/api/app/childnames")
+    .get("https://giga-back-end.herokuapp.com/api/app/childnames", {"parentId": "12"})
     .then(res => {
       dispatch({ type: CHILDREN_GET_SUCCESS, payload: res.data });
     })
