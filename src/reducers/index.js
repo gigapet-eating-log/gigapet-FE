@@ -1,10 +1,10 @@
 import {
-  SIGNUP_START,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAIL,
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SIGNUP_START,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
   ENTRY_GET_START,
   ENTRY_GET_SUCCESS,
   ENTRY_GET_FAIL,
@@ -20,12 +20,21 @@ import {
   CHILDREN_GET_START,
   CHILDREN_GET_SUCCESS,
   CHILDREN_GET_FAIL,
+  CHILDREN_POST_START,
+  CHILDREN_POST_SUCCESS,
+  CHILDREN_POST_FAIL,
+  CHILDREN_PUT_START,
+  CHILDREN_PUT_SUCCESS,
+  CHILDREN_PUT_FAIL,
+  CHILDREN_DELETE_START,
+  CHILDREN_DELETE_SUCCESS,
+  CHILDREN_DELETE_FAIL,
   SET_CURRENT_CHILD
 } from "../actions";
 
 const initialState = {
   foodEntries: [],
-  children: [],
+  kids: [],
   currentChild: {},
   pending: {
     login: false,
@@ -34,7 +43,10 @@ const initialState = {
     post: false,
     put: false,
     delete: false,
-    getChildren: false
+    getChildren: false,
+    postChildren: false,
+    putChildren: false,
+    deleteChildren: false,
   },
   signUpSuccessMessage: "",
   error: false,
@@ -43,12 +55,41 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOGIN_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          login: true
+        },
+        error: false,
+        errorMessage: ""
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          login: false
+        }
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          login: false
+        },
+        error: true,
+        errorMessage: action.payload
+      };
     case SIGNUP_START:
       return {
         ...state,
-        isLoggingIn: true
+        isLoggingIn: true,
+        error: false,
+        errorMessage: ""
       };
-
     case SIGNUP_SUCCESS:
       console.log(action.payload);
       return {
@@ -56,36 +97,8 @@ const rootReducer = (state = initialState, action) => {
         isLoggingIn: false,
         signUpSuccessMessage: action.payload.message
       };
-
     case SIGNUP_FAIL:
       console.log(action.payload);
-      return {
-        ...state,
-        isLoggingIn: false,
-        error: true,
-        errorMessage: action.payload
-      };
-
-    case LOGIN_START:
-      console.log("LOGIN_START console");
-      return {
-        ...state,
-        isLoggingIn: true
-      };
-
-    case LOGIN_SUCCESS:
-      console.log("LOGIN_SUCCESS console");
-      console.log(action.payload);
-
-      return {
-        ...state,
-        isLoggingIn: false,
-        token: action.payload.token,
-        error: false,
-        errorMessage: ""
-      };
-
-    case LOGIN_FAIL:
       return {
         ...state,
         isLoggingIn: false,
@@ -212,7 +225,7 @@ const rootReducer = (state = initialState, action) => {
     case CHILDREN_GET_SUCCESS:
       return {
         ...state,
-        children: action.payload,
+        kids: action.payload,
         pending: {
           ...state.pending,
           getChildren: false
@@ -224,6 +237,88 @@ const rootReducer = (state = initialState, action) => {
         pending: {
           ...state.pending,
           getChildren: false
+        },
+        error: action.payload
+      };
+
+    case CHILDREN_POST_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          postChildren: true
+        },
+        error: ""
+      };
+    case CHILDREN_POST_SUCCESS:
+      return {
+        ...state,
+        kids: action.payload,
+        pending: {
+          ...state.pending,
+          postChildren: false
+        }
+      };
+    case CHILDREN_POST_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          postChildren: false
+        },
+        error: action.payload
+      };
+    case CHILDREN_PUT_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          putChildren: true
+        },
+        error: ""
+      };
+    case CHILDREN_PUT_SUCCESS:
+      return {
+        ...state,
+        kids: action.payload,
+        pending: {
+          ...state.pending,
+          putChildren: false
+        }
+      };
+    case CHILDREN_PUT_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          putChildren: false
+        },
+        error: action.payload
+      };
+    case CHILDREN_DELETE_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          deleteChildren: true
+        },
+        error: ""
+      };
+    case CHILDREN_DELETE_SUCCESS:
+      return {
+        ...state,
+        kids: action.payload,
+        pending: {
+          ...state.pending,
+          deleteChildren: false
+        }
+      };
+    case CHILDREN_DELETE_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          deleteChildren: false
         },
         error: action.payload
       };

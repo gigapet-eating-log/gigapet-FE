@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import TopBar from './components/TopBar';
 import AddEntry from './components/AddEntry';
+import ManageAccount from './components/ManageAccount';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -14,12 +15,13 @@ function App() {
     <div className="App">
       <Router>
         <TopBar />
-        <Route  path='/auth' component={AuthPage} />
-        <Route  path='/login' component={LogIn} />
-        <Route  path='/signUp' component={SignUp} />
+        <Route path='/auth' component={AuthPage} />
+        <Route path='/login' component={LogIn} />
+        <Route path='/signUp' component={SignUp} />
         <PrivateRoute exact path='/' component={Home} />
         <PrivateRoute exact path="/add-entry" component={AddEntry}/>
         <PrivateRoute exact path="/history" component={History}/>
+        <PrivateRoute exact path="/manage-account" component={ManageAccount}/>
       </Router>
     </div>
   );

@@ -8,7 +8,7 @@ class LogIn extends Component {
         super();
         this.state = {
             credentials: {
-                username: '',
+                name: '',
                 password: ''
             }
         }
@@ -30,30 +30,24 @@ class LogIn extends Component {
         event.preventDefault();
         this.props.login(this.state.credentials)
           .then(() => {
-            this.props.history.push("./main");
-            window.location.reload();
+            this.props.history.push("./");
           })
+          .then(() => window.location.reload())
         }
 
     render() {
         return (
             <div>
                 LOGIN FORM
-                <div> {this.props.signUpSuccess ? (
-                    `${this.props.signUpSuccessMessage}`
-                ) : (
-                        ''
-                    )}
-                </div>
                 <Form onSubmit={this.login}>
                     <FormGroup row>
-                        <Label for="username" sm={2}>Username</Label>
+                        <Label for="name" sm={2}>Username</Label>
                         <Col sm={10}>
                             <Input
                                 type="text"
-                                name="username"
+                                name="name"
                                 placeholder="johndoe123"
-                                value={this.state.credentials.username}
+                                value={this.state.credentials.name}
                                 onChange={this.handleChanges} />
                         </Col>
                     </FormGroup>
