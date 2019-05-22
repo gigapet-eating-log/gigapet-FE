@@ -42,7 +42,7 @@ class SortDateForm extends Component {
                         style={{marginLeft: "10px"}}
                  
                     />
-                    <button type="submit">Sort</button>
+                    <button type="submit">Find</button>
                 </form>
             </div>
         );

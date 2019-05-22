@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {getFoodByRange} from '../actions';
 
 class SortDateFormSpecific extends Component {
     constructor() {
@@ -20,6 +22,14 @@ class SortDateFormSpecific extends Component {
       sortSpecific = event => {
           event.preventDefault();
           console.log(this.state);
+          const range = {
+            name:this.props.currentKid, //what is it on state?
+            parentId: localStorage.getItem('currentUserId'),
+            dateStart:this.state.dateOne,
+            dateEnd: this.state.dateTwo
+          }
+
+          this.props.getFoodByRange(range);
       }
 
     render() {
@@ -45,11 +55,11 @@ class SortDateFormSpecific extends Component {
                         style={{marginLeft: "10px"}}
                        
                     /> 
-                    <button type="submit">Sort</button>
+                    <button type="submit">Find</button>
                 </form>
             </div>
         );
     }
 }
 
-export default SortDateFormSpecific;
+export default connect(null, {getFoodByRange})(SortDateFormSpecific);

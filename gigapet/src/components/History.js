@@ -13,8 +13,10 @@ class History extends Component {
         return (
             <div className='history'>
                 <h3>Caloric Intake History of "Insert Current Child Here"</h3>
-                <NavLink to='/history/day'>Sort by Day</NavLink>
-                <NavLink to='/history/specific'>Sort by Range</NavLink>
+                <nav className='nav'>
+                    <NavLink to='/history/day'>Find by Day</NavLink>
+                    <NavLink to='/history/specific'>Find by Range</NavLink>
+                </nav>
             </div>
         );
     }

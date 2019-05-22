@@ -23,7 +23,10 @@ import {
   SET_CURRENT_CHILD,
   GETFOODBYDATE_START,
   GETFOODBYDATE_SUCCESS,
-  GETFOODBYDATE_FAIL
+  GETFOODBYDATE_FAIL,
+  GETFOODBYRANGE_START,
+  GETFOODBYRANGE_SUCCESS,
+  GETFOODBYRANGE_FAIL
 } from "../actions";
 
 const initialState = {
@@ -249,6 +252,25 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GETFOODBYDATE_FAIL:
+      return {
+
+      };
+
+      // GETFOODBYRANGE_START,
+      // GETFOODBYRANGE_SUCCESS,
+      // GETFOODBYRANGE_FAIL
+
+      case GETFOODBYRANGE_START:
+      return {
+
+      };
+
+    case GETFOODBYRANGE_SUCCESS:
+      return {
+
+      };
+
+    case GETFOODBYRANGE_FAIL:
       return {
 
       };
