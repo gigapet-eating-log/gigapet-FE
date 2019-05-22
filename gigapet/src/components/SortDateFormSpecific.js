@@ -23,7 +23,7 @@ class SortDateFormSpecific extends Component {
           event.preventDefault();
           console.log(this.state);
           const range = {
-            name:this.props.currentKid, //what is it on state?
+            name:this.props.currentChild, //what is it on state?
             parentId: localStorage.getItem('currentUserId'),
             dateStart:this.state.dateOne,
             dateEnd: this.state.dateTwo

@@ -30,7 +30,23 @@ import {
 } from "../actions";
 
 const initialState = {
-  foodEntries: [],
+  foodEntries: [
+    {
+      name: "Billy",
+      foodName: "Mashed Potatoes mixed with Peas",
+      mealTime: "Lunch",
+      date: "2019-01-02",
+      calorieCount: 200
+    },
+    {
+      name: "Billy",
+      foodName: "Chicken and Rice",
+      mealTime: "Dinner",
+      date: "2019-01-02",
+      calorieCount: 450
+    }
+  ],
+
   children: [],
   currentChild: {},
   pending: {
@@ -248,7 +264,8 @@ const rootReducer = (state = initialState, action) => {
 
     case GETFOODBYDATE_SUCCESS:
       return {
-
+        ...state,
+        foodEntries: [...action.payload]
       };
 
     case GETFOODBYDATE_FAIL:
@@ -256,11 +273,11 @@ const rootReducer = (state = initialState, action) => {
 
       };
 
-      // GETFOODBYRANGE_START,
-      // GETFOODBYRANGE_SUCCESS,
-      // GETFOODBYRANGE_FAIL
+    // GETFOODBYRANGE_START,
+    // GETFOODBYRANGE_SUCCESS,
+    // GETFOODBYRANGE_FAIL
 
-      case GETFOODBYRANGE_START:
+    case GETFOODBYRANGE_START:
       return {
 
       };
