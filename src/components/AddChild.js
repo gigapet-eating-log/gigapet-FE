@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { connect } from "react-redux";
-import { postChild } from "../actions";
+import { getChildren, postChildren } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
@@ -46,6 +46,7 @@ class AddChild extends Component {
 
   addChild = event => {
     event.preventDefault();
+    const id = localStorage.getItem("currentUserId");
     const newChild = {
       parentId: localStorage.getItem("currentUserId"),
       name: this.state.input.name,
@@ -108,5 +109,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { postChild }
+  { getChildren, postChildren }
 )(AddChild);

@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { putChildren, deleteChildren } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
@@ -26,7 +25,13 @@ const PSC = styled.p`
 `
 
 const SpanSC = styled.span`
+  width: 100px;
+  margin-right: 10px;
+`
 
+const InputSC = styled.input`
+  width: 50px;
+  margin: 5px 0;
 `
 
 const ButtonSC = styled.button`
@@ -101,12 +106,12 @@ class Child extends React.Component {
             <PSC>Calorie goal: {this.props.data.calorieGoal}</PSC>
           </div>
         ) : (
-          <Form onSubmit={this.editChildren}>
+          <form>
               <div>
                 <SpanSC>
-                  Name
+                  Name:
                 </SpanSC>
-                  <input
+                  <InputSC
                     type="text"
                     name="name"
                     placeholder="Child Name"
@@ -116,9 +121,9 @@ class Child extends React.Component {
               </div>
               <div>
                 <SpanSC>
-                  Calorie Goal
+                  Calorie Goal:
                 </SpanSC>
-                  <input
+                  <InputSC
                     type="text"
                     name="calorieGoal"
                     placeholder="Calorie Goal"
@@ -126,7 +131,7 @@ class Child extends React.Component {
                     onChange={this.changeHandler}
                   />
               </div>
-          </Form>
+          </form>
         )}
         <div>
           <ButtonSC onClick={this.editHandler}>{this.state.editActive ? "submit" : "edit"}</ButtonSC>

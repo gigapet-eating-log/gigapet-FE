@@ -167,7 +167,7 @@ export const [CHILDREN_POST_START, CHILDREN_POST_SUCCESS, CHILDREN_POST_FAIL] = 
   "CHILDREN_POST_FAIL"
 ];
 
-export const postChild = newChild => dispatch => {
+export const postChildren = newChild => dispatch => {
   dispatch({ type: CHILDREN_POST_START });
   axiosWithAuth()
     .post("https://giga-back-end.herokuapp.com/api/app/addchild", newChild)
@@ -190,15 +190,15 @@ export const [CHILDREN_PUT_START, CHILDREN_PUT_SUCCESS, CHILDREN_PUT_FAIL] = [
 ];
 
 export const putChildren = (entry, id) => dispatch => {
-  dispatch({ type: ENTRY_PUT_START });
+  dispatch({ type: CHILDREN_PUT_START });
   axios
     .put(`https://giga-back-end.herokuapp.com/api/users/register/${id}`, entry)
     .then(res => {
       console.log("PUT SUCCESS: ", res);
-      dispatch({ type: ENTRY_PUT_SUCCESS, payload: res.data });
+      dispatch({ type: CHILDREN_PUT_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: ENTRY_PUT_FAIL, payload: err });
+      dispatch({ type: CHILDREN_PUT_FAIL, payload: err });
     });
 };
 
@@ -209,14 +209,14 @@ export const [CHILDREN_DELETE_START, CHILDREN_DELETE_SUCCESS, CHILDREN_DELETE_FA
 ];
 
 export const deleteChildren = id => dispatch => {
-  dispatch({ type: ENTRY_DELETE_START });
+  dispatch({ type: CHILDREN_DELETE_START });
   axios
     .delete(`https://giga-back-end.herokuapp.com/api/users/register${id}`)
     .then(res => {
-      dispatch({ type: ENTRY_DELETE_SUCCESS, payload: res.data });
+      dispatch({ type: CHILDREN_DELETE_SUCCESS, payload: res.data });
     })
     .catch(err => {
-      dispatch({ type: ENTRY_DELETE_FAIL, payload: err });
+      dispatch({ type: CHILDREN_DELETE_FAIL, payload: err });
     });
 };
 
