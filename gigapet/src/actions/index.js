@@ -153,45 +153,6 @@ export const getChildren = ParentID => dispatch => {
 export const SET_CURRENT_CHILD = "SET_CURRENT_CHILD";
 
 
-// NEW CONTENT BELOW
-
-export const [GETFOODBYDATE_START, GETFOODBYDATE_SUCCESS, GETFOODBYDATE_FAIL] = [
-  "GETFOODBYDATE_START",
-  "GETFOODBYDATE_SUCCESS",
-  "GETFOODBYDATE_FAIL"
-];
-
-export const getFoodByDate = info => dispatch => {
-  dispatch({ type: GETFOODBYDATE_START });
-  axios
-    .get("https://giga-back-end.herokuapp.com/api/app/getfood", info)
-    .then(res => {
-      console.log(res)
-      dispatch({ type: GETFOODBYDATE_SUCCESS, payload: res.data })
-    })
-    .catch(err => {
-      dispatch({ type: GETFOODBYDATE_FAIL, payload: err })
-    })
-  }
-
-  export const [GETFOODBYRANGE_START, GETFOODBYRANGE_SUCCESS, GETFOODBYRANGE_FAIL] = [
-    "GETFOODBYRANGE_START",
-    "GETFOODBYRANGE_SUCCESS",
-    "GETFOODBYRANGE_FAIL"
-  ];
-  
-  export const getFoodByRange = range => dispatch => {
-    dispatch({ type: GETFOODBYRANGE_START });
-    axios
-      .get("https://giga-back-end.herokuapp.com/api/app/getfood", range)
-      .then(res => {
-        console.log(res)
-        dispatch({ type: GETFOODBYRANGE_SUCCESS, payload: res.data })
-      })
-      .catch(err => {
-        dispatch({ type: GETFOODBYRANGE_FAIL, payload: err })
-      })
-    }
 
 
 
