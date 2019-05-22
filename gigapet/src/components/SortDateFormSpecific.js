@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {getFoodByRange} from '../actions';
 
 class SortDateFormSpecific extends Component {
     constructor() {
