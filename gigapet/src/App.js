@@ -14,9 +14,9 @@ function App() {
     <div className="App">
       <Router>
         <TopBar />
-        <Route  path='/auth' component={AuthPage} />
-        <Route  path='/login' component={LogIn} />
-        <Route  path='/signUp' component={SignUp} />
+        <Route path='/auth' component={AuthPage} />
+        <Route path='/login' component={LogIn} />
+        <Route path='/signUp' component={SignUp} />
         <PrivateRoute exact path='/' component={Home} />
         <PrivateRoute exact path="/add-entry" component={AddEntry}/>
         <PrivateRoute exact path="/history" component={History}/>

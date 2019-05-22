@@ -25,6 +25,7 @@ export const signUp = credentials => dispatch => {
         .then(res => {
           console.log(res);
           localStorage.setItem("token", res.data);
+          localStorage.setItem("currentUserId", res.data.id);
           dispatch({ type: LOGIN_SUCCESS, payload: res.data });
         })
         .catch(err => {
@@ -49,8 +50,8 @@ export const login = credentials => dispatch => {
   return axios
     .post("https://giga-back-end.herokuapp.com/api/users/login", credentials)
     .then(res => {
-      console.log(res);
       localStorage.setItem("token", res.data);
+      localStorage.setItem("currentUserId", res.data.id);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -148,6 +149,28 @@ export const getChildren = ParentID => dispatch => {
     })
     .catch(err => {
       dispatch({ type: CHILDREN_GET_FAIL, payload: err });
+    });
+};
+
+export const [CHILDREN_POST_START, CHILDREN_POST_SUCCESS, CHILDREN_POST_FAIL] = [
+  "CHILDREN_POST_START",
+  "CHILDREN_POST_SUCCESS",
+  "CHILDREN_POST_FAIL"
+];
+
+export const postChild = newChild => dispatch => {
+  dispatch({ type: ENTRY_POST_START });
+  axios
+    .post("https://giga-back-end.herokuapp.com/api/app/addchild", newChild)
+    .then(res => {
+      console.log("result:", res)
+      dispatch({ type: ENTRY_POST_SUCCESS });
+    })
+    .then(() => {
+      
+    })
+    .catch(err => {
+      dispatch({ type: ENTRY_POST_FAIL, payload: err });
     });
 };
 

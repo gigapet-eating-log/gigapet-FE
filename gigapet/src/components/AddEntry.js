@@ -125,10 +125,10 @@ class AddEntry extends React.Component {
     ev.preventDefault();
     const newEntry = {
       "name": this.props.currentChild.name,
-      "mealTime": "Lunch",
+      "mealTime": "lunch",
       "foodType": this.state.input.category,
       "foodName": this.state.input.food,
-      "parentId": this.state.currentUserID,
+      "parentId": localStorage.getItem("currentUserId"),
       "calories": this.state.input.calories,
       "date": this.state.input.date,
       "childId": this.props.currentChild.id
@@ -142,22 +142,23 @@ class AddEntry extends React.Component {
     return (
     <FormSC onSubmit={this.submitHandler}>
       <TitleSC>ADD SOME FOOD</TitleSC>
-      <InputBoxSC spellCheck="false" required>
+      <InputBoxSC spellCheck="false">
         <InputSC
           type="text"
           name="food"
           placeholder="Food"
           value={this.state.input.food}
           onChange={this.changeHandler}
+          required
         />
         <SelectSC placeholder={!this.state.input.category} name="category" value={this.state.input.category} onChange={this.changeHandler} required>
           <OptionSC hidden>Category</OptionSC>
-          <OptionSC value="vegetables">Vegetables</OptionSC>
-          <OptionSC value="fruits">Fruits</OptionSC>
-          <OptionSC value="grains">Grains</OptionSC>
-          <OptionSC value="dairy">Dairy</OptionSC>
-          <OptionSC value="proteins">Proteins</OptionSC>
-          <OptionSC value="junk">Junk</OptionSC>
+          <OptionSC value="Vegetables">Vegetables</OptionSC>
+          <OptionSC value="Fruits">Fruits</OptionSC>
+          <OptionSC value="wholeGrain">Grains</OptionSC>
+          <OptionSC value="Dairy">Dairy</OptionSC>
+          <OptionSC value="Proteins">Proteins</OptionSC>
+          <OptionSC value="Junk">Junk</OptionSC>
         </SelectSC>
         <InputSC
           type="text"
@@ -165,6 +166,7 @@ class AddEntry extends React.Component {
           placeholder="Calories"
           value={this.state.input.calories}
           onChange={this.changeHandler}
+          required
         />
         <InputSC
           type="date"

@@ -31,7 +31,6 @@ class LogIn extends Component {
         this.props.login(this.state.credentials)
           .then(() => {
             this.props.history.push("./main");
-            window.location.reload();
           })
         }
 

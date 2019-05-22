@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../sharedStyles';
+import AddChild from './AddChild';
 
 const DogeBox = styled.div`
   width: 300px;
@@ -28,6 +29,7 @@ const Home = () => {
         <Doge src={`img/Dog-${dogeAge}-${dogeMood}.gif`} alt=""/>
       </DogeBox>
       <Link to="/add-entry">Feed The Pupper</Link>
+      <AddChild />
     </div>
   )
 }

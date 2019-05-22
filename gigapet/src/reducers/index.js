@@ -20,12 +20,15 @@ import {
   CHILDREN_GET_START,
   CHILDREN_GET_SUCCESS,
   CHILDREN_GET_FAIL,
+  CHILDREN_POST_START,
+  CHILDREN_POST_SUCCESS,
+  CHILDREN_POST_FAIL,
   SET_CURRENT_CHILD
 } from "../actions";
 
 const initialState = {
   foodEntries: [],
-  currentUserID: "",
+  currentUserID: 2,
   children: [],
   currentChild: {
     "id": "1",
@@ -235,6 +238,34 @@ const rootReducer = (state = initialState, action) => {
         pending: {
           ...state.pending,
           getChildren: false
+        },
+        error: action.payload
+      };
+      
+    case CHILDREN_POST_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          childPost: true
+        },
+        error: ""
+      };
+    case CHILDREN_POST_SUCCESS:
+      return {
+        ...state,
+        children: action.payload,
+        pending: {
+          ...state.pending,
+          childPost: false
+        }
+      };
+    case CHILDREN_POST_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          childPost: false
         },
         error: action.payload
       };
