@@ -1,10 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { postFood } from "../actions";
-import styled from 'styled-components';
-import { colors, fonts } from "../sharedStyles"; 
+import styled from "styled-components";
+import { colors, fonts } from "../sharedStyles";
 import moment from "moment";
-
 
 const FormSC = styled.div`
   display: flex;
@@ -16,25 +15,25 @@ const FormSC = styled.div`
   border: 1px outset rgb(200, 200, 200);
   border-radius: 5px;
   overflow: hidden;
-`
+`;
 
 const TitleSC = styled.h1`
   font-family: ${fonts.title};
   font-weight: bold;
   font-size: 2.2rem;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
   background: ${colors.lightPurple};
   align-self: stretch;
   color: white;
   margin: 0 0 20px;
   padding: 10px;
-`
+`;
 
 const InputBoxSC = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-`
+`;
 
 const InputSC = styled.input`
   font-family: ${fonts.handwriting};
@@ -43,11 +42,11 @@ const InputSC = styled.input`
   padding: 3px;
   margin: 5px 0;
   outline-color: ${colors.purple};
-    &::selection{
-      background: ${colors.lighterPurple};
-      color: white;
-    }
-`
+  &::selection {
+    background: ${colors.lighterPurple};
+    color: white;
+  }
+`;
 
 const SelectSC = styled.select`
   font-family: ${fonts.handwriting};
@@ -56,25 +55,25 @@ const SelectSC = styled.select`
   padding: 3px 0;
   margin: 5px 0;
   outline-color: ${colors.purple};
-  color: ${props => props.placeholder ? "grey" : "black"};
-  &::selection{
-      background: ${colors.lighterPurple};
-      color: white;
-    }
-`
+  color: ${props => (props.placeholder ? "grey" : "black")};
+  &::selection {
+    background: ${colors.lighterPurple};
+    color: white;
+  }
+`;
 
 const OptionSC = styled.option`
   color: black;
-`
+`;
 
 const ButtonBoxSC = styled.div`
   margin: 10px 0;
-`
+`;
 
 const ButtonSC = styled.button`
   font-family: ${fonts.title};
   font-weight: bold;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
   font-size: 16px;
   background: ${colors.lightPurple};
   color: white;
@@ -84,10 +83,10 @@ const ButtonSC = styled.button`
   border-radius: 5px;
   user-select: none;
   outline: none;
-    &:active {
-      background: ${colors.purple};
-      border-color: ${colors.purple};
-    }
+  &:active {
+    background: ${colors.purple};
+    border-color: ${colors.purple};
+  }
 `;
 
 const InputButtonSC = styled(ButtonSC)`
@@ -99,96 +98,144 @@ class AddEntry extends React.Component {
     super();
     this.state = {
       input: {
+        childId: "x",
         food: "",
         calories: "",
         date: "",
-        category: ""
-      },
+        category: "x"
+      }
     };
   }
 
   componentDidMount() {
-    const date = moment().format('YYYY-MM-DD')
+    const date = moment().format("YYYY-MM-DD");
     this.setState({
       input: {
         ...this.state.input,
         date: date
       }
-    })
+    });
   }
 
   changeHandler = ev => {
-    this.setState({ input: { ...this.state.input, [ev.target.name]: ev.target.value } });
+    this.setState({
+      input: { ...this.state.input, [ev.target.name]: ev.target.value }
+    });
   };
 
   submitHandler = ev => {
     ev.preventDefault();
-    const newEntry = {
-      "name": this.props.currentChild.name,
-      "mealTime": "lunch",
-      "foodType": this.state.input.category,
-      "foodName": this.state.input.food,
-      "parentId": localStorage.getItem("currentUserId"),
-      "calories": this.state.input.calories,
-      "date": this.state.input.date,
-      "childId": this.props.currentChild.id
+    const inp = this.state.input;
+    if (
+      inp.childId === "x" ||
+      inp.food === "" ||
+      inp.calories === "" ||
+      inp.category === "x"
+    ) {
+      return;
     }
-    console.log(newEntry)
-    this.props.postFood(newEntry)
-    this.setState({ input: { name: "", date: moment().format('YYYY-MM-DD'), height: "" } })
-  }
+    const selectedChild = this.props.kids.find(el => {
+      return el.id == inp.childId;
+    });
+    console.log(selectedChild);
+    const newEntry = {
+      name: selectedChild.name,
+      mealTime: "lunch",
+      foodType: inp.category,
+      foodName: inp.food,
+      parentId: localStorage.getItem("currentUserId"),
+      calories: inp.calories,
+      date: inp.date,
+      childId: inp.childId
+    };
+    console.log(newEntry);
+    this.props.postFood(newEntry);
+    this.setState({
+      input: {
+        childId: "x",
+        food: "",
+        date: moment().format("YYYY-MM-DD"),
+        category: "x",
+        calories: ""
+      }
+    });
+  };
 
   render() {
     return (
-    <FormSC onSubmit={this.submitHandler}>
-      <TitleSC>ADD SOME FOOD</TitleSC>
-      <InputBoxSC spellCheck="false">
-        <InputSC
-          type="text"
-          name="food"
-          placeholder="Food"
-          value={this.state.input.food}
-          onChange={this.changeHandler}
-          required
-        />
-        <SelectSC placeholder={!this.state.input.category} name="category" value={this.state.input.category} onChange={this.changeHandler} required>
-          <OptionSC hidden>Category</OptionSC>
-          <OptionSC value="vegetables">Vegetables</OptionSC>
-          <OptionSC value="fruits">Fruits</OptionSC>
-          <OptionSC value="grains">Grains</OptionSC>
-          <OptionSC value="dairy">Dairy</OptionSC>
-          <OptionSC value="proteins">Proteins</OptionSC>
-          <OptionSC value="junk">Junk</OptionSC>
-        </SelectSC>
-        <InputSC
-          type="text"
-          name="calories"
-          placeholder="Calories"
-          value={this.state.input.calories}
-          onChange={this.changeHandler}
-          required
-        />
-        <InputSC
-          type="date"
-          name="date"
-          value={this.state.input.date}
-          onChange={this.changeHandler}
-          required
-        />
-      </InputBoxSC>
-      <ButtonBoxSC>
-        <InputButtonSC onClick={this.submitHandler}>
-          Send the pupper food
-        </InputButtonSC>
-      </ButtonBoxSC>
-    </FormSC>
+      <FormSC onSubmit={this.submitHandler}>
+        <TitleSC>ADD SOME FOOD</TitleSC>
+        <InputBoxSC spellCheck="false">
+          <SelectSC
+            placeholder={this.state.input.childId === "x"}
+            name="childId"
+            value={this.state.input.childId}
+            onChange={this.changeHandler}
+            required
+          >
+            <OptionSC value="x" hidden>
+              Child
+            </OptionSC>
+            {this.props.kids &&
+              this.props.kids.map(el => {
+                return <OptionSC value={el.id}>{el.name}</OptionSC>;
+              })}
+          </SelectSC>
+          <InputSC
+            type="text"
+            name="food"
+            placeholder="Food"
+            value={this.state.input.food}
+            onChange={this.changeHandler}
+            required
+          />
+          <SelectSC
+            placeholder={this.state.input.category === "x"}
+            name="category"
+            value={this.state.input.category}
+            onChange={this.changeHandler}
+            required
+          >
+            <OptionSC value="x" hidden>
+              Category
+            </OptionSC>
+            <OptionSC value="vegetables">Vegetables</OptionSC>
+            <OptionSC value="fruits">Fruits</OptionSC>
+            <OptionSC value="grains">Grains</OptionSC>
+            <OptionSC value="dairy">Dairy</OptionSC>
+            <OptionSC value="proteins">Proteins</OptionSC>
+            <OptionSC value="junk">Junk</OptionSC>
+          </SelectSC>
+          <InputSC
+            type="text"
+            name="calories"
+            placeholder="Calories"
+            value={this.state.input.calories}
+            onChange={this.changeHandler}
+            required
+          />
+          <InputSC
+            type="date"
+            name="date"
+            value={this.state.input.date}
+            onChange={this.changeHandler}
+            required
+          />
+        </InputBoxSC>
+        <ButtonBoxSC>
+          <InputButtonSC onClick={this.submitHandler}>
+            Send the pupper food
+          </InputButtonSC>
+        </ButtonBoxSC>
+      </FormSC>
     );
   }
 }
 
 const mapStateToProps = state => ({
   currentChild: state.currentChild,
-  currentUserID: state.currentUserID
+  currentUserID: state.currentUserID,
+  kids: state.kids
 });
 
 export default connect(

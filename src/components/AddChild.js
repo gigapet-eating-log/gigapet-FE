@@ -2,6 +2,27 @@ import React, { Component } from "react";
 import { Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { connect } from "react-redux";
 import { postChild } from "../actions";
+import styled from "styled-components";
+import { fonts, colors } from "../sharedStyles";
+
+const ButtonSC = styled.button`
+  font-family: ${fonts.title};
+  font-weight: bold;
+  letter-spacing: .05rem;
+  font-size: 16px;
+  background: ${colors.lightPurple};
+  color: white;
+  padding: 5px 10px;
+  margin: 10px;
+  border-color: ${colors.lightPurple};
+  border-radius: 5px;
+  user-select: none;
+  outline: none;
+    &:active {
+      background: ${colors.purple};
+      border-color: ${colors.purple};
+    }
+`;
 
 class AddChild extends Component {
   constructor() {
@@ -72,9 +93,9 @@ class AddChild extends Component {
               />
             </Col>
           </FormGroup>
-          <button>
-            <i class="fas fa-baby-carriage"> SUBMIT</i>
-          </button>
+          <ButtonSC>
+            SUBMIT <span class="fas fa-baby-carriage" />
+          </ButtonSC>
         </Form>
       </div>
     );

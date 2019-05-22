@@ -64,14 +64,12 @@ const dogeMood = "2";
 
 class Home extends React.Component {
   componentDidMount() {
-    const token = localStorage.getItem("token");
-    console.log(token);
     const id = localStorage.getItem("currentUserId");
-    this.props.getChildren({ "parentId": `${id}` })
+    this.props.getChildren(id);
   }
 
   childSelectHandler = ev => {
-    const selectedChild = this.props.kids.filter(el => {
+    const selectedChild = this.props.kids.find(el => {
       return el.id == ev.target.value;
     });
     this.props.setCurrentChild(selectedChild);
@@ -88,9 +86,10 @@ class Home extends React.Component {
         <SelectBoxSC>
           <LabelSC>OWNER</LabelSC>
           <SelectSC onChange={this.childSelectHandler}>
-            {this.props.kids.map(el => {
-              return <option value={el.id}>{el.name.toUpperCase()}</option>;
-            })}
+            {this.props.kids &&
+              this.props.kids.map(el => {
+                return <option value={el.id}>{el.name.toUpperCase()}</option>;
+              })}
           </SelectSC>
         </SelectBoxSC>
       </div>

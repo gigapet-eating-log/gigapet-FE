@@ -23,31 +23,19 @@ import {
   CHILDREN_POST_START,
   CHILDREN_POST_SUCCESS,
   CHILDREN_POST_FAIL,
+  CHILDREN_PUT_START,
+  CHILDREN_PUT_SUCCESS,
+  CHILDREN_PUT_FAIL,
+  CHILDREN_DELETE_START,
+  CHILDREN_DELETE_SUCCESS,
+  CHILDREN_DELETE_FAIL,
   SET_CURRENT_CHILD
 } from "../actions";
 
 const initialState = {
   foodEntries: [],
-  kids: [
-    {
-      id: "1",
-      name: "Billy",
-      calorieGoal: "20000",
-      parentId: "2"
-    },
-    {
-      id: "2",
-      name: "Jenny",
-      calorieGoal: "20000",
-      parentId: "2"
-    }
-  ],
-  currentChild: {
-    id: "1",
-    name: "Billy",
-    calorieGoal: "20000",
-    parentId: "2"
-  },
+  kids: [],
+  currentChild: {},
   pending: {
     login: false,
     register: false,
@@ -55,7 +43,10 @@ const initialState = {
     post: false,
     put: false,
     delete: false,
-    getChildren: false
+    getChildren: false,
+    postChildren: false,
+    putChildren: false,
+    deleteChildren: false,
   },
   signUpSuccessMessage: "",
   error: false,
@@ -80,7 +71,7 @@ const rootReducer = (state = initialState, action) => {
         pending: {
           ...state.pending,
           login: false
-        },
+        }
       };
     case LOGIN_FAIL:
       return {
@@ -255,17 +246,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pending: {
           ...state.pending,
-          childPost: true
+          postChildren: true
         },
         error: ""
       };
     case CHILDREN_POST_SUCCESS:
       return {
         ...state,
-        children: action.payload,
+        kids: action.payload,
         pending: {
           ...state.pending,
-          childPost: false
+          postChildren: false
         }
       };
     case CHILDREN_POST_FAIL:
@@ -273,7 +264,61 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pending: {
           ...state.pending,
-          childPost: false
+          postChildren: false
+        },
+        error: action.payload
+      };
+    case CHILDREN_PUT_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          putChildren: true
+        },
+        error: ""
+      };
+    case CHILDREN_PUT_SUCCESS:
+      return {
+        ...state,
+        kids: action.payload,
+        pending: {
+          ...state.pending,
+          putChildren: false
+        }
+      };
+    case CHILDREN_PUT_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          putChildren: false
+        },
+        error: action.payload
+      };
+    case CHILDREN_DELETE_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          deleteChildren: true
+        },
+        error: ""
+      };
+    case CHILDREN_DELETE_SUCCESS:
+      return {
+        ...state,
+        kids: action.payload,
+        pending: {
+          ...state.pending,
+          deleteChildren: false
+        }
+      };
+    case CHILDREN_DELETE_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          deleteChildren: false
         },
         error: action.payload
       };

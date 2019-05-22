@@ -151,8 +151,9 @@ export const getChildren = id => dispatch => {
   console.log(id)
   dispatch({ type: CHILDREN_GET_START });
   axios
-    .get("https://giga-back-end.herokuapp.com/api/app/childnames", id)
+    .get(`https://giga-back-end.herokuapp.com/api/app/childname/${id}`)
     .then(res => {
+      console.log("GETRES:", res);
       dispatch({ type: CHILDREN_GET_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -167,18 +168,55 @@ export const [CHILDREN_POST_START, CHILDREN_POST_SUCCESS, CHILDREN_POST_FAIL] = 
 ];
 
 export const postChild = newChild => dispatch => {
-  dispatch({ type: ENTRY_POST_START });
+  dispatch({ type: CHILDREN_POST_START });
   axios
     .post("https://giga-back-end.herokuapp.com/api/app/addchild", newChild)
     .then(res => {
       console.log("result:", res)
-      dispatch({ type: ENTRY_POST_SUCCESS });
+      dispatch({ type: CHILDREN_POST_SUCCESS });
     })
     .then(() => {
 
     })
     .catch(err => {
-      dispatch({ type: ENTRY_POST_FAIL, payload: err });
+      dispatch({ type: CHILDREN_POST_FAIL, payload: err });
+    });
+};
+
+export const [CHILDREN_PUT_START, CHILDREN_PUT_SUCCESS, CHILDREN_PUT_FAIL] = [
+  "CHILDREN_PUT_START",
+  "CHILDREN_PUT_SUCCESS",
+  "CHILDREN_PUT_FAIL"
+];
+
+export const putChildren = (entry, id) => dispatch => {
+  dispatch({ type: ENTRY_PUT_START });
+  axios
+    .put(`https://giga-back-end.herokuapp.com/api/users/register/${id}`, entry)
+    .then(res => {
+      console.log("PUT SUCCESS: ", res);
+      dispatch({ type: ENTRY_PUT_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: ENTRY_PUT_FAIL, payload: err });
+    });
+};
+
+export const [CHILDREN_DELETE_START, CHILDREN_DELETE_SUCCESS, CHILDREN_DELETE_FAIL] = [
+  "CHILDREN_DELETE_START",
+  "CHILDREN_DELETE_SUCCESS",
+  "CHILDREN_DELETE_FAIL"
+];
+
+export const deleteChildren = id => dispatch => {
+  dispatch({ type: ENTRY_DELETE_START });
+  axios
+    .delete(`https://giga-back-end.herokuapp.com/api/users/register${id}`)
+    .then(res => {
+      dispatch({ type: ENTRY_DELETE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: ENTRY_DELETE_FAIL, payload: err });
     });
 };
 
