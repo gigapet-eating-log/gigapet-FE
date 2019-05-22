@@ -151,7 +151,7 @@ export const getChildren = id => dispatch => {
   console.log(id)
   dispatch({ type: CHILDREN_GET_START });
   axios
-    .get("https://giga-back-end.herokuapp.com/api/app/childnames", {"parentId": "12"})
+    .get("https://giga-back-end.herokuapp.com/api/app/childnames", id)
     .then(res => {
       dispatch({ type: CHILDREN_GET_SUCCESS, payload: res.data });
     })
