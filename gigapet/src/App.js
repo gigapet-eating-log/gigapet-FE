@@ -7,7 +7,10 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import TopBar from './components/TopBar';
 import AddEntry from './components/AddEntry';
+import History from './components/History';
 import PrivateRoute from './components/PrivateRoute';
+import SortDateForm from './components/SortDateForm';
+import SortDateFormSpecific from './components/SortDateFormSpecific';
 
 function App() {
   return (
@@ -19,7 +22,9 @@ function App() {
         <Route  path='/signUp' component={SignUp} />
         <PrivateRoute exact path='/' component={Home} />
         <PrivateRoute exact path="/add-entry" component={AddEntry}/>
-        <PrivateRoute exact path="/history" component={History}/>
+        <PrivateRoute path="/history" component={History}/>
+        <PrivateRoute path="/history/day" component={SortDateForm}/>
+        <PrivateRoute path="/history/specific" component={SortDateFormSpecific}/>
       </Router>
     </div>
   );

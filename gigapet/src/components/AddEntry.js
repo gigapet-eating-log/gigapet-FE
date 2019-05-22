@@ -113,7 +113,7 @@ class AddEntry extends React.Component {
   submitHandler = ev => {
     ev.preventDefault();
     this.props.postFood(this.state.input)
-    this.setState({ input: { name: "", date: moment().format('yyyy-mm-dd'), height: "" } })
+    this.setState({ input: { name: "", date: moment().format('yyyy-mm-dd'), category: "" } })
   }
 
   render() {

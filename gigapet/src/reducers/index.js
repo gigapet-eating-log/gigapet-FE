@@ -20,7 +20,10 @@ import {
   CHILDREN_GET_START,
   CHILDREN_GET_SUCCESS,
   CHILDREN_GET_FAIL,
-  SET_CURRENT_CHILD
+  SET_CURRENT_CHILD,
+  GETFOODBYDATE_START,
+  GETFOODBYDATE_SUCCESS,
+  GETFOODBYDATE_FAIL
 } from "../actions";
 
 const initialState = {
@@ -232,6 +235,26 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentChild: action.payload
       };
+    // GETFOODBYDATE_START, 
+    // GETFOODBYDATE_SUCCESS, 
+    // GETFOODBYDATE_FAIL
+    case GETFOODBYDATE_START:
+      return {
+
+      };
+
+    case GETFOODBYDATE_SUCCESS:
+      return {
+
+      };
+
+    case GETFOODBYDATE_FAIL:
+      return {
+
+      };
+
+
+
     default:
       return state;
   }
