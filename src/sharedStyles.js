@@ -11,7 +11,9 @@ export const colors = {
   purple: "#551A8B",
   lightPurple: "#722bb4",
   lighterPurple: "#8045b6",
-  lavender: "#e6e6ff"
+  lavender: "#e6e6ff",
+  darkLavender: "#8989ff",
+  darkestLavender: "#342a6d"
 }
 
 export const fonts = {

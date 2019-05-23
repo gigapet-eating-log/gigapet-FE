@@ -40,6 +40,7 @@ class EditChildren extends React.Component {
   }
 
   clickHandler = num => {
+    if (!this.props.kids) {return}
     let newNum = this.state.localChildNum + num;
     if (newNum < 0) {newNum = this.props.kids.length - 1};
     if (newNum > this.props.kids.length - 1) {newNum = 0};

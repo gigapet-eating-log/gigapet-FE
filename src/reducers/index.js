@@ -5,6 +5,16 @@ import {
   SIGNUP_START,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  LOGOUT,
+  USER_GET_START,
+  USER_GET_SUCCESS,
+  USER_GET_FAIL,
+  USER_PUT_START,
+  USER_PUT_SUCCESS,
+  USER_PUT_FAIL,
+  USER_DELETE_START,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL,
   ENTRY_GET_START,
   ENTRY_GET_SUCCESS,
   ENTRY_GET_FAIL,
@@ -35,10 +45,14 @@ import {
 const initialState = {
   foodEntries: [],
   kids: [],
-  currentChild: {},
+  currentUser: null,
+  currentChild: null,
   pending: {
     login: false,
     register: false,
+    userGet: false,
+    userPut: false,
+    userDelete: false,
     get: false,
     post: false,
     put: false,
@@ -46,7 +60,7 @@ const initialState = {
     getChildren: false,
     postChildren: false,
     putChildren: false,
-    deleteChildren: false,
+    deleteChildren: false
   },
   signUpSuccessMessage: "",
   error: false,
@@ -91,19 +105,98 @@ const rootReducer = (state = initialState, action) => {
         errorMessage: ""
       };
     case SIGNUP_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         isLoggingIn: false,
         signUpSuccessMessage: action.payload.message
       };
     case SIGNUP_FAIL:
-      console.log(action.payload);
       return {
         ...state,
         isLoggingIn: false,
         error: true,
         errorMessage: action.payload
+      };
+    case LOGOUT:
+      return{ initialState }
+    case USER_GET_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userGet: true
+        },
+        error: ""
+      };
+    case USER_GET_SUCCESS:
+      return {
+        ...state,
+        currentUser: action.payload,
+        pending: {
+          ...state.pending,
+          userGet: false
+        }
+      };
+    case USER_GET_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userGet: false
+        },
+        error: action.payload
+      };
+    case USER_PUT_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userPut: true
+        },
+        error: ""
+      };
+    case USER_PUT_SUCCESS:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userPut: false
+        }
+      };
+    case USER_PUT_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userPut: false
+        },
+        error: action.payload
+      };
+    case USER_DELETE_START:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userDelete: true
+        },
+        error: ""
+      };
+    case USER_DELETE_SUCCESS:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userDelete: false
+        }
+      };
+    case USER_DELETE_FAIL:
+      return {
+        ...state,
+        pending: {
+          ...state.pending,
+          userDelete: false
+        },
+        error: action.payload
       };
     case ENTRY_GET_START:
       return {
@@ -144,7 +237,6 @@ const rootReducer = (state = initialState, action) => {
     case ENTRY_POST_SUCCESS:
       return {
         ...state,
-        foodEntries: action.payload,
         pending: {
           ...state.pending,
           post: false
@@ -171,7 +263,6 @@ const rootReducer = (state = initialState, action) => {
     case ENTRY_PUT_SUCCESS:
       return {
         ...state,
-        foodEntries: action.payload,
         pending: {
           ...state.pending,
           put: false
@@ -198,7 +289,6 @@ const rootReducer = (state = initialState, action) => {
     case ENTRY_DELETE_SUCCESS:
       return {
         ...state,
-        foodEntries: action.payload,
         pending: {
           ...state.pending,
           delete: false
@@ -327,7 +417,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentChild: action.payload
       };
-    
 
     default:
       return state;

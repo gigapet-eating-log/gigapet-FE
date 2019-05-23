@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { setCurrentChild } from "../actions";
+import { logout } from "../actions";
 import { colors } from "../sharedStyles";
 
 const TopBarContainerSC = styled.div`
@@ -16,7 +16,7 @@ const TopBarContainerSC = styled.div`
 const TopBarSC = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 700px;
+  max-width: 800px;
   justify-content: center;
   margin: 10px auto 0;
 `;
@@ -39,7 +39,7 @@ const NavLinkSC = styled(NavLink).attrs({
   margin: 5px;
   color: #555555;
   text-align: center;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 38px;
   letter-spacing: 0.1rem;
@@ -74,15 +74,6 @@ const FixedLinkSC = styled(NavLinkSC)`
   }
 `;
 
-const logout = ev => {
-  ev.preventDefault();
-  if (!localStorage.getItem("token")) {
-    return;
-  }
-  localStorage.clear();
-  setTimeout(() => window.location.reload(), 10);
-};
-
 class TopBar extends React.Component {
   visibleHandler = () => {
     return localStorage.getItem("token");
@@ -99,7 +90,7 @@ class TopBar extends React.Component {
             <NavLinkSC to="/add-entry">ADD FOOD</NavLinkSC>
             <NavLinkSC to="/history">FOOD HISTORY</NavLinkSC>
             <NavLinkSC to="/manage-account">MANAGE ACCOUNT</NavLinkSC>
-            <FixedLinkSC onClick={logout}>LOGOUT</FixedLinkSC>
+            <FixedLinkSC onClick={this.props.logout}>LOGOUT</FixedLinkSC>
           </TopBarSC>
         </TopBarContainerSC>
       );
@@ -115,4 +106,8 @@ class TopBar extends React.Component {
   }
 }
 
-export default TopBar;
+export default connect(
+  null,
+  { logout }
+)(TopBar);
+

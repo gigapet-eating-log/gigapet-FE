@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { putChildren, deleteChildren } from "../actions";
+import { getUser, putUser, deleteUser } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
@@ -68,27 +68,36 @@ class EditAccount extends React.Component {
       editActive: false,
       editInput: {
         name: "",
-        calorieGoal: ""
+        email: ""
       }
     };
   }
+
+  componentDidMount(){
+    if (this.props.currentUser) {return};
+    const id = localStorage.getItem("currentUserId");
+    this.props.getUser(id);
+  }
+
   editHandler = ev => {
     ev.preventDefault();
     if (!this.state.editActive) {
       this.setState({
         editActive: true,
         editInput: {
-          name: "USERNAME",
-          email: "EMAIL"
+          name: this.props.currentUser.name,
+          email: this.props.currentUser.email
         }
       });
     } else {
-      this.props.putChildren(this.state.editInput, this.props.data.id);
+      console.log(this.state.editInput)
+      const id = localStorage.getItem("currentUserId");
+      this.props.putUser(this.state.editInput, id);
       this.setState({
         editActive: false,
         editInput: {
           name: "",
-          calorieGoal: ""
+          email: ""
         }
       });
     }
@@ -101,7 +110,7 @@ class EditAccount extends React.Component {
 
   deleteHandler = ev => {
     ev.preventDefault();
-    this.props.deleteChildren(this.props.data.id);
+    this.props.deleteUser(this.props.currentUser.id);
   };
 
   render() {
@@ -111,8 +120,8 @@ class EditAccount extends React.Component {
         <DetailBoxSC>
           {!this.state.editActive ? (
             <div>
-              <H3SC>USERNAME</H3SC>
-              <PSC>EMAIL ADDRESS</PSC>
+              <H3SC>{this.props.currentUser && this.props.currentUser.name}</H3SC>
+              <PSC>{this.props.currentUser && this.props.currentUser.email}</PSC>
             </div>
           ) : (
             <form>
@@ -121,7 +130,6 @@ class EditAccount extends React.Component {
                 <InputSC
                   type="text"
                   name="name"
-                  placeholder="Child Name"
                   value={this.state.editInput.name}
                   onChange={this.changeHandler}
                 />
@@ -130,9 +138,8 @@ class EditAccount extends React.Component {
                 <SpanSC>Email:</SpanSC>
                 <InputSC
                   type="text"
-                  name="calorieGoal"
-                  placeholder="Calorie Goal"
-                  value={this.state.editInput.calorieGoal}
+                  name="email"
+                  value={this.state.editInput.email}
                   onChange={this.changeHandler}
                 />
               </InputLineSC>
@@ -150,7 +157,14 @@ class EditAccount extends React.Component {
   }
 }
 
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  };
+};
+
 export default connect(
-  null,
-  { putChildren, deleteChildren }
+  mapStateToProps,
+  { getUser, putUser, deleteUser }
 )(EditAccount);

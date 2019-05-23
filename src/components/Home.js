@@ -7,16 +7,18 @@ import { colors } from "../sharedStyles";
 
 const Title = styled.h1`
   font-family: "Press Start 2P", cursive;
+  color: ${colors.darkestLavender};
+  font-size: 40px;
   margin-top: 60px;
 `;
 
 const DogeBox = styled.div`
-  width: 300px;
-  height: 300px;
-  margin: 35px auto 20px;
+  max-width: 350px;
+  max-height: 350px;
+  margin: 35px auto 35px;
   padding: 15px;
   border-radius: 50px;
-  box-shadow: 0 0 5px 15px ${colors.lightPurple};
+  box-shadow: 0 0 5px 15px ${colors.darkLavender};
   user-select: none;
 `;
 
@@ -28,35 +30,43 @@ const Doge = styled.img`
 const SelectBoxSC = styled.div`
   display: flex;
   position: relative;
-  width: 100px;
+  width: 150px;
   flex-direction: column;
-  color: ${colors.purple};
+  color: ${colors.darkestLavender};
   background: white;
   font-weight: bold;
-  border: 2px solid ${colors.purple};
-  border-radius: 10px;
+  outline: ${colors.lavender};
+  border: 1px solid ${colors.darkestLavender};
+  border-radius: 8px;
+  /* border-radius: 4px;
+  border: 1px solid #bbb; */
   margin: 20px auto;
+  padding: 0;
   user-select: none;
 `;
 
 const LabelSC = styled.label`
   position: absolute;
   padding-left: 14px;
-  color: ${colors.purple};
-  font-size: 14px;
+  color: ${colors.darkestLavender};
+  font-size: 16px;
   font-weight: bold;
 `;
 
 const SelectSC = styled.select`
-  color: ${colors.purple};
+  color: ${colors.darkestLavender};
   width: 100%;
   background: transparent;
   border: none;
-  font-weight: bold;
+  font-size: 16px;
   border-radius: 10px;
-  padding: 20px 10px 0;
+  padding: 25px 10px 5px;
   z-index: 3;
   outline: none;
+`;
+
+const OptionSC = styled.option`
+    border-radius: 10px;
 `;
 
 const dogeAge = "Puppy";
@@ -82,13 +92,12 @@ class Home extends React.Component {
         <DogeBox>
           <Doge src={`img/Dog-${dogeAge}-${dogeMood}.gif`} alt="" />
         </DogeBox>
-        <Link to="/add-entry">Feed The Pupper</Link>
         <SelectBoxSC>
           <LabelSC>OWNER</LabelSC>
           <SelectSC onChange={this.childSelectHandler}>
             {this.props.kids &&
               this.props.kids.map(el => {
-                return <option value={el.id}>{el.name.toUpperCase()}</option>;
+                return <OptionSC value={el.id}>{el.name}</OptionSC>;
               })}
           </SelectSC>
         </SelectBoxSC>
