@@ -29,7 +29,8 @@ import {
   CHILDREN_DELETE_START,
   CHILDREN_DELETE_SUCCESS,
   CHILDREN_DELETE_FAIL,
-  SET_CURRENT_CHILD
+  SET_CURRENT_CHILD,
+  FILTERED_TO_STATE
 } from "../actions";
 
 const initialState = {
@@ -37,54 +38,54 @@ const initialState = {
   kids: [],
   currentChild: {},
   filteredEntries: [
-    {
-      id: 5,
-      foodName: "Carrot",
-      date: "2019-01-02",
-      mealTime: "Lunch",
-      foodType: "vegetables",
-      calories: 150
-    },
-    {
-      id: 9,
-      foodName: "Carrot",
-      date: "2019-01-03",
-      mealTime: "Lunch",
-      foodType: "fruits",
-      calories: 200
-    },
-    {
-      id: 9,
-      foodName: "Carrot",
-      date: "2019-01-04",
-      mealTime: "Lunch",
-      foodType: "grains",
-      calories: 600
-    },
-    {
-      id: 9,
-      foodName: "Carrot",
-      date: "2019-02-05",
-      mealTime: "Lunch",
-      foodType: "dairy",
-      calories: 500
-    },
-    {
-      id: 9,
-      foodName: "Carrot",
-      date: "2019-02-06",
-      mealTime: "Lunch",
-      foodType: "proteins",
-      calories: 400
-    },
-    {
-      id: 9,
-      foodName: "Carrot",
-      date: "2019-02-01",
-      mealTime: "Lunch",
-      foodType: "junk",
-      calories: 300
-    },
+    // {
+    //   id: 5,
+    //   foodName: "Carrot",
+    //   date: "2019-01-02",
+    //   mealTime: "Lunch",
+    //   foodType: "vegetables",
+    //   calories: 150
+    // },
+    // {
+    //   id: 9,
+    //   foodName: "Carrot",
+    //   date: "2019-01-03",
+    //   mealTime: "Lunch",
+    //   foodType: "fruits",
+    //   calories: 200
+    // },
+    // {
+    //   id: 9,
+    //   foodName: "Carrot",
+    //   date: "2019-01-04",
+    //   mealTime: "Lunch",
+    //   foodType: "grains",
+    //   calories: 600
+    // },
+    // {
+    //   id: 9,
+    //   foodName: "Carrot",
+    //   date: "2019-02-05",
+    //   mealTime: "Lunch",
+    //   foodType: "dairy",
+    //   calories: 500
+    // },
+    // {
+    //   id: 9,
+    //   foodName: "Carrot",
+    //   date: "2019-02-06",
+    //   mealTime: "Lunch",
+    //   foodType: "proteins",
+    //   calories: 400
+    // },
+    // {
+    //   id: 9,
+    //   foodName: "Carrot",
+    //   date: "2019-02-01",
+    //   mealTime: "Lunch",
+    //   foodType: "junk",
+    //   calories: 300
+    // },
   ],
   pending: {
     login: false,
@@ -382,7 +383,12 @@ const rootReducer = (state = initialState, action) => {
         },
         error: action.payload
       };
-    
+
+    case FILTERED_TO_STATE:
+      return {
+        ...state,
+        filteredEntries: action.payload
+      }
 
     default:
       return state;

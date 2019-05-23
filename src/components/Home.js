@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { getChildren, setCurrentChild } from "../actions";
+import { getChildren, setCurrentChild, getFood } from "../actions";
 import { colors } from "../sharedStyles";
 
 const Title = styled.h1`
@@ -82,6 +82,7 @@ class Home extends React.Component {
       return el.id == ev.target.value;
     });
     this.props.setCurrentChild(selectedChild);
+    this.props.getFood(this.props.currentChild.id)
   };
 
   render() {
@@ -113,5 +114,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getChildren, setCurrentChild }
+  { getChildren, setCurrentChild, getFood }
 )(Home);

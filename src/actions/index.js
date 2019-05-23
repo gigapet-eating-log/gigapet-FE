@@ -236,3 +236,12 @@ export const setCurrentChild = (selectedChild) => {
     payload: selectedChild
   }
 }
+
+export const FILTERED_TO_STATE = "FILTERED_TO_STATE";
+
+export const filteredToState = array => {
+  return {
+    type: FILTERED_TO_STATE,
+    payload: array
+  }
+}

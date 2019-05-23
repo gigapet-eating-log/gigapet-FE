@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { FormSC, TitleSC, InputBoxSC, SelectSC, OptionSC, InputSC, ButtonBoxSC, InputButtonSC } from './AddEntry';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import FoodEntries from './FoodEntries';
-import { getChildren, setCurrentChild, getFood } from "../actions";
+import { getChildren, setCurrentChild, getFood, filteredToState } from "../actions";
 
 
 
@@ -21,7 +21,7 @@ class SortFormAdvanced extends Component {
             },
             categoryChoose: false,
             dateOneChoose: false,
-            dateTwoChoose:false,
+            dateTwoChoose: false,
         }
     }
 
@@ -29,19 +29,22 @@ class SortFormAdvanced extends Component {
         const id = localStorage.getItem("currentUserId");
         this.props.getChildren(id);
 
+        this.props.getFood(this.props.currentChild.id);
+        this.props.getFood(this.props.currentChild.id);
+
     }
 
     childSelectHandler = ev => {
         const selectedChild = this.props.kids.find(el => {
-          return el.id == ev.target.value;
+            return el.id == ev.target.value;
         });
         this.props.setCurrentChild(selectedChild);
 
         const childId = this.props.currentChild.id;
         this.props.getFood(childId);
-      };
+    };
 
-   
+
     changeHandler = ev => {
         this.setState({
             input: { ...this.state.input, [ev.target.name]: ev.target.value }
@@ -59,15 +62,36 @@ class SortFormAdvanced extends Component {
 
     submitHandler = event => {
         event.preventDefault();
-       
-        // this.state.input.category !== "x" || "" && this.setState({ ...state, categoryChoose: true});
-        // this.state.input.dateStart !== "" && this.setState({ ...state, dateStart: true});
-        // this.state.input.dateEnd !== "" && this.setState({ ...state, dateStart: true});
 
+        const filtered = this.props.foodEntries.filter(item => {
+            let categoryCheck = false;
+            let dateStartCheck = false;
+            let dateEndCheck = false;
+
+            const dateStartParsed = Number(this.state.input.dateStart.replace(/-/g, ""))
+            const dateEndParsed = Number(this.state.input.dateEnd.replace(/-/g, ""))
+            const dateParsed = Number(item.date.replace(/-/g, ""))
+
+            if (this.state.input.category === "x" || this.state.input.category === item.foodType) {
+                categoryCheck = true
+            }
+            if (this.state.input.dateStart === "" || dateStartParsed <= dateParsed) {
+                dateStartCheck = true
+            }
+            if (this.state.input.dateEnd === "" || dateEndParsed >= dateParsed) {
+                dateEndCheck = true
+            }
+
+            return (categoryCheck && dateStartCheck && dateEndCheck)
+        })
+        console.log(this.state.input);
+        this.props.filteredToState(filtered);
     }
 
 
     render() {
+        console.log(this.props.filteredEntries);
+        
         return (
             <div className='advanced-search'>
 
@@ -120,7 +144,7 @@ class SortFormAdvanced extends Component {
                 </FormSC>
 
                 <div>Caloric Intake History of </div>
-                <div className='child-select-container' > 
+                <div className='child-select-container' >
                     <label>Superhero: </label>
                     <select onChange={this.childSelectHandler}>
                         {this.props.kids &&
@@ -136,7 +160,7 @@ class SortFormAdvanced extends Component {
                         return <FoodEntries key={entry.food} entry={entry} />
                     })}
                 </div>
-                
+
             </div>
 
         );
@@ -153,5 +177,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { getFood, getChildren, setCurrentChild }
+    { getFood, getChildren, setCurrentChild, filteredToState }
 )(SortFormAdvanced);
