@@ -20,9 +20,14 @@
     margin: 25px;
   }
 
-  .entry {
+  .entry-card {
     width: 500px;
     height:auto;
+  }
+
+  .history nav a {
+    border: 1px solid black;
+    margin: 1%;
   }
 
   

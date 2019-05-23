@@ -12,6 +12,8 @@ import History from './components/History';
 import PrivateRoute from './components/PrivateRoute';
 import SortDateForm from './components/SortDateForm';
 import SortDateFormSpecific from './components/SortDateFormSpecific';
+import SortDateFormCategory from './components/SortDateFormCategory';
+import SortFormAdvanced from './components/SortFormAdvanced';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <PrivateRoute path="/history" component={History}/>
         <PrivateRoute path="/history/day" component={SortDateForm}/>
         <PrivateRoute path="/history/specific" component={SortDateFormSpecific}/>
+        <PrivateRoute path="/history/category" component={SortDateFormCategory}/>
+        <PrivateRoute path="/history/advanced" component={SortFormAdvanced}/>
       </Router>
     </div>
   );

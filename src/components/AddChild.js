@@ -52,7 +52,7 @@ class AddChild extends Component {
       name: this.state.input.name,
       calorieGoal: this.state.input.calorieGoal
     };
-    this.props.postChild(newChild);
+    this.props.postChildren(newChild);
     this.setState({
       input: {
         name: "",

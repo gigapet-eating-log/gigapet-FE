@@ -67,6 +67,8 @@ export const logout = () => {
   return {type: LOGOUT}
 };
 
+///////////////////////////////////////////////////////////////////////////////////
+
 export const [ENTRY_GET_START, ENTRY_GET_SUCCESS, ENTRY_GET_FAIL] = [
   "ENTRY_GET_START",
   "ENTRY_GET_SUCCESS",
@@ -78,12 +80,14 @@ export const getFood = childId => dispatch => {
   axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/getfood/${childId}`)
     .then(res => {
+      console.log("fetching food", res)
       dispatch({ type: ENTRY_GET_SUCCESS, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: ENTRY_GET_FAIL, payload: err });
     });
 };
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -152,7 +156,7 @@ export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
 export const getChildren = id => dispatch => {
   console.log(id)
   dispatch({ type: CHILDREN_GET_START });
-  axiosWithAuth()
+  return axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/childname/${id}`)
     .then(res => {
       console.log("GETRES:", res);

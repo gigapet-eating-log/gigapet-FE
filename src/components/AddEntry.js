@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { colors, fonts } from "../sharedStyles";
 import moment from "moment";
 
-const FormSC = styled.div`
+export const FormSC = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +17,7 @@ const FormSC = styled.div`
   overflow: hidden;
 `;
 
-const TitleSC = styled.h1`
+export const TitleSC = styled.h1`
   font-family: ${fonts.title};
   font-weight: bold;
   font-size: 2.2rem;
@@ -29,13 +29,13 @@ const TitleSC = styled.h1`
   padding: 10px;
 `;
 
-const InputBoxSC = styled.div`
+export const InputBoxSC = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
 `;
 
-const InputSC = styled.input`
+export const InputSC = styled.input`
   font-family: ${fonts.handwriting};
   font-size: 14px;
   width: 100%;
@@ -48,7 +48,7 @@ const InputSC = styled.input`
   }
 `;
 
-const SelectSC = styled.select`
+export const SelectSC = styled.select`
   font-family: ${fonts.handwriting};
   font-size: 14px;
   width: 260px;
@@ -62,11 +62,11 @@ const SelectSC = styled.select`
   }
 `;
 
-const OptionSC = styled.option`
+export const OptionSC = styled.option`
   color: black;
 `;
 
-const ButtonBoxSC = styled.div`
+export const ButtonBoxSC = styled.div`
   margin: 10px 0;
 `;
 
@@ -89,7 +89,7 @@ const ButtonSC = styled.button`
   }
 `;
 
-const InputButtonSC = styled(ButtonSC)`
+export const InputButtonSC = styled(ButtonSC)`
   display: ${props => (props.updateTog ? "none" : "inline-block")};
 `;
 
@@ -207,7 +207,7 @@ class AddEntry extends React.Component {
             <OptionSC value="junk">Junk</OptionSC>
           </SelectSC>
           <InputSC
-            type="text"
+            type="number"
             name="calories"
             placeholder="Calories"
             value={this.state.input.calories}

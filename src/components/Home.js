@@ -28,7 +28,7 @@ const Doge = styled.img`
 const SelectBoxSC = styled.div`
   display: flex;
   position: relative;
-  width: 100px;
+  width: 200px;
   flex-direction: column;
   color: ${colors.purple};
   background: white;
@@ -63,12 +63,20 @@ const dogeAge = "Puppy";
 const dogeMood = "2";
 
 class Home extends React.Component {
+
   componentDidMount() {
+    console.log("CDM Home")
+    console.log(this.props.currentChild);
     const id = localStorage.getItem("currentUserId");
-    this.props.getChildren(id);
+    this.props.getChildren(id)
+    .then(
+       (!this.props.currentChild) && 
+      this.props.setCurrentChild(this.props.kids[0])
+    )
   }
 
   childSelectHandler = ev => {
+    console.log(ev.target.value)
     const selectedChild = this.props.kids.find(el => {
       return el.id == ev.target.value;
     });

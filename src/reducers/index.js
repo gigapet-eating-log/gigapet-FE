@@ -36,6 +36,7 @@ const initialState = {
   foodEntries: [],
   kids: [],
   currentChild: {},
+  filteredEntries: [],
   pending: {
     login: false,
     register: false,
@@ -55,6 +56,13 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case SET_CURRENT_CHILD:
+      return {
+        ...state,
+        currentChild: action.payload
+      };
+
     case LOGIN_START:
       return {
         ...state,
@@ -118,6 +126,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         foodEntries: action.payload,
+        filteredEntries: action.payload, // Originally, foodEntries and Filtered are the same.
         pending: {
           ...state.pending,
           get: false
@@ -144,7 +153,6 @@ const rootReducer = (state = initialState, action) => {
     case ENTRY_POST_SUCCESS:
       return {
         ...state,
-        foodEntries: action.payload,
         pending: {
           ...state.pending,
           post: false
@@ -226,6 +234,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         kids: action.payload,
+        currentChild: action.payload[0],
         pending: {
           ...state.pending,
           getChildren: false
@@ -321,11 +330,6 @@ const rootReducer = (state = initialState, action) => {
           deleteChildren: false
         },
         error: action.payload
-      };
-    case SET_CURRENT_CHILD:
-      return {
-        ...state,
-        currentChild: action.payload
       };
     
 
