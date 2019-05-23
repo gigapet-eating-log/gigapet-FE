@@ -20,9 +20,20 @@
     margin: 25px;
   }
 
+  .card-container {
+    margin: 2%;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+  }
+
   .entry-card {
-    width: 500px;
+    width: 30%;
     height:auto;
+    border: 1px solid black;
+    margin:1%;
   }
 
   .history nav a {

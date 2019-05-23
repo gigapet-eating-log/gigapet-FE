@@ -68,6 +68,7 @@ class Home extends React.Component {
     console.log("CDM Home")
     console.log(this.props.currentChild);
     const id = localStorage.getItem("currentUserId");
+    console.log(id);
     this.props.getChildren(id)
     .then(
        (!this.props.currentChild) && 
@@ -96,7 +97,7 @@ class Home extends React.Component {
           <SelectSC onChange={this.childSelectHandler}>
             {this.props.kids &&
               this.props.kids.map(el => {
-                return <option value={el.id}>{el.name.toUpperCase()}</option>;
+                return <option key={el.id} value={el.id}>{el.name.toUpperCase()}</option>;
               })}
           </SelectSC>
         </SelectBoxSC>

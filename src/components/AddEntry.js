@@ -121,6 +121,7 @@ class AddEntry extends React.Component {
     this.setState({
       input: { ...this.state.input, [ev.target.name]: ev.target.value }
     });
+    console.log(this.state.input)
   };
 
   submitHandler = ev => {

@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 
 // takes individual objects from filtered array or original array and display the contents
 
@@ -12,12 +14,17 @@ function FoodEntries (props) {
             {props.entry.foodType === 'proteins' && <i class="fas fa-bacon"></i>}
             {props.entry.foodType === 'junk' && <i class="fas fa-cookie"></i>}
 
-            <p>Superhero: {props.entry.name}</p>
-            <p>{props.entry.name} ate {props.entry.foodName} for {props.entry.mealTime} on {props.entry.date} totaling {props.entry.calorieCount} calories.</p>
+            <p>Superhero {props.entry.name} ate {props.entry.foodName} for {props.entry.mealTime} on {props.entry.date} totaling {props.entry.calories} calories.</p>
         </div>
     );
 }
 
 // vegetables fruits grains dairy proteins junk
+const mapStateToProps = state => ({
+    currentChild: state.currentChild,
+});
 
-export default FoodEntries;
+export default connect(
+    mapStateToProps,
+    {}
+)(FoodEntries);

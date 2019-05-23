@@ -76,6 +76,8 @@ export const [ENTRY_GET_START, ENTRY_GET_SUCCESS, ENTRY_GET_FAIL] = [
 ];
 
 export const getFood = childId => dispatch => {
+  console.log(childId); // 5 or 9 right now
+  
   dispatch({ type: ENTRY_GET_START });
   axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/getfood/${childId}`)
@@ -99,7 +101,7 @@ export const [ENTRY_POST_START, ENTRY_POST_SUCCESS, ENTRY_POST_FAIL] = [
 
 export const postFood = newEntry => dispatch => {
   dispatch({ type: ENTRY_POST_START });
-  axios
+  axiosWithAuth()
     .post("https://giga-back-end.herokuapp.com/api/app/addfood", newEntry)
     .then(res => {
       console.log("result:", res)
@@ -154,7 +156,7 @@ export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
 ];
 
 export const getChildren = id => dispatch => {
-  console.log(id)
+  // console.log(id)
   dispatch({ type: CHILDREN_GET_START });
   return axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/childname/${id}`)
