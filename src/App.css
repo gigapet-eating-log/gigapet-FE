@@ -7,7 +7,7 @@
     padding:1%;
   }
   
-  .active i {
+  .active {
     background-color:lightblue;
   }
   
@@ -15,6 +15,16 @@
     border: 1px solid black;
     margin:0.5%;
   }
+
+  .nav {
+    margin: 25px;
+  }
+
+  .entry {
+    width: 500px;
+    height:auto;
+  }
+
   
   
   
