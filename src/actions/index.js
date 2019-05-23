@@ -150,12 +150,11 @@ export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
 ];
 
 export const getChildren = id => dispatch => {
-  console.log(id)
   dispatch({ type: CHILDREN_GET_START });
-  axiosWithAuth()
+  return axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/childname/${id}`)
     .then(res => {
-      console.log("GETRES:", res);
+      console.log("result:", res);
       dispatch({ type: CHILDREN_GET_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -171,7 +170,7 @@ export const [CHILDREN_POST_START, CHILDREN_POST_SUCCESS, CHILDREN_POST_FAIL] = 
 
 export const postChildren = newChild => dispatch => {
   dispatch({ type: CHILDREN_POST_START });
-  axiosWithAuth()
+  return axiosWithAuth()
     .post("https://giga-back-end.herokuapp.com/api/app/addchild", newChild)
     .then(res => {
       console.log("result:", res)

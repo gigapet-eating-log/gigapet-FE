@@ -10,7 +10,8 @@ export const colors = {
   lighterGrey: "#f4f4f4",
   purple: "#551A8B",
   lightPurple: "#722bb4",
-  lighterPurple: "#8045b6"
+  lighterPurple: "#8045b6",
+  lavender: "#e6e6ff"
 }
 
 export const fonts = {

@@ -4,14 +4,16 @@ import { putChildren, deleteChildren } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
-const ChildBoxSC = styled.div`
+const DetailBoxSC = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: flex-end;
   border: 3px solid ${colors.purple};
   border-radius: 10px;
   width: 180px;
-  margin: 10px;
+  height: 110px;
+  margin: 0px auto;
   padding: 10px;
 `;
 const H3SC = styled.h3`
@@ -24,13 +26,19 @@ const PSC = styled.p`
   padding: 0;
 `;
 
+const InputLineSC = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const SpanSC = styled.span`
-  width: 100px;
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  width: 90px;
 `;
 
 const InputSC = styled.input`
-  width: 50px;
+  width: 90px;
   margin: 5px 0;
 `;
 
@@ -66,16 +74,25 @@ class EditAccount extends React.Component {
   }
   editHandler = ev => {
     ev.preventDefault();
-    this.props.putChildren(this.state.editInput, this.props.data.id);
-    this.setState({
-      editActive: false,
-      editInput: {
-        name: "",
-        calorieGoal: ""
-      }
-    });
+    if (!this.state.editActive) {
+      this.setState({
+        editActive: true,
+        editInput: {
+          name: "USERNAME",
+          email: "EMAIL"
+        }
+      });
+    } else {
+      this.props.putChildren(this.state.editInput, this.props.data.id);
+      this.setState({
+        editActive: false,
+        editInput: {
+          name: "",
+          calorieGoal: ""
+        }
+      });
+    }
   };
-
   changeHandler = ev => {
     this.setState({
       editInput: { ...this.state.editInput, [ev.target.name]: ev.target.value }
@@ -91,29 +108,43 @@ class EditAccount extends React.Component {
     return (
       <div>
         <h2>Edit Account Details</h2>
-        <form onSubmit={this.editHandler}>
+        <DetailBoxSC>
+          {!this.state.editActive ? (
+            <div>
+              <H3SC>USERNAME</H3SC>
+              <PSC>EMAIL ADDRESS</PSC>
+            </div>
+          ) : (
+            <form>
+              <InputLineSC>
+                <SpanSC>Username:</SpanSC>
+                <InputSC
+                  type="text"
+                  name="name"
+                  placeholder="Child Name"
+                  value={this.state.editInput.name}
+                  onChange={this.changeHandler}
+                />
+              </InputLineSC>
+              <InputLineSC>
+                <SpanSC>Email:</SpanSC>
+                <InputSC
+                  type="text"
+                  name="calorieGoal"
+                  placeholder="Calorie Goal"
+                  value={this.state.editInput.calorieGoal}
+                  onChange={this.changeHandler}
+                />
+              </InputLineSC>
+            </form>
+          )}
           <div>
-            <SpanSC>Name:</SpanSC>
-            <InputSC
-              type="text"
-              name="name"
-              placeholder="Child Name"
-              value={this.state.editInput.name}
-              onChange={this.changeHandler}
-            />
+            <ButtonSC onClick={this.editHandler}>
+              {this.state.editActive ? "Submit" : "Edit"}
+            </ButtonSC>
+            <ButtonSC onClick={this.deleteHandler}>Delete</ButtonSC>
           </div>
-          <div>
-            <SpanSC>Calorie Goal:</SpanSC>
-            <InputSC
-              type="text"
-              name="calorieGoal"
-              placeholder="Calorie Goal"
-              value={this.state.editInput.calorieGoal}
-              onChange={this.changeHandler}
-            />
-          </div>
-          <ButtonSC type="submit">delete</ButtonSC>
-        </form>
+        </DetailBoxSC>
       </div>
     );
   }
