@@ -1,9 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Col, Form, FormGroup, Label, Input } from "reactstrap";
 import { putChildren, deleteChildren } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
+
+const ChildBoxSC = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 3px solid ${colors.purple};
+  border-radius: 10px;
+  width: 180px;
+  margin: 10px;
+  padding: 10px;
+`
+const H3SC = styled.h3`
+  margin: 0;
+  padding: 0;
+`
+
+const PSC = styled.p`
+  margin: 12px;
+  padding: 0;
+`
+
+const SpanSC = styled.span`
+  width: 100px;
+  margin-right: 10px;
+`
+
+const InputSC = styled.input`
+  width: 50px;
+  margin: 5px 0;
+`
 
 const ButtonSC = styled.button`
   font-family: ${fonts.title};
@@ -13,7 +42,7 @@ const ButtonSC = styled.button`
   background: ${colors.lightPurple};
   color: white;
   padding: 5px 10px;
-  margin: 10px;
+  margin: 2px;
   border-color: ${colors.lightPurple};
   border-radius: 5px;
   user-select: none;
@@ -30,9 +59,8 @@ class Child extends React.Component {
     this.state = {
       editActive: false,
       editInput: {
-        food: "",
-        date: "",
-        category: ""
+        name: "",
+        calorieGoal: ""
       }
     };
   }
@@ -52,8 +80,7 @@ class Child extends React.Component {
         editActive: false,
         editInput: {
           name: "",
-          age: "",
-          height: ""
+          calorieGoal: ""
         }
       });
     }
@@ -72,52 +99,45 @@ class Child extends React.Component {
 
   render() {
     return (
-      <div>
+      <ChildBoxSC>
         {!this.state.editActive ? (
           <div>
-            <h3>{this.props.data.name}</h3>
-            <p>Calorie goal: {this.props.data.calorieGoal}</p>
+            <H3SC>{this.props.data.name}</H3SC>
+            <PSC>Calorie goal: {this.props.data.calorieGoal}</PSC>
           </div>
         ) : (
-          <Form onSubmit={this.editChildren}>
-            <FormGroup row>
-              <Label for="name" sm={2}>
-                Name
-              </Label>
-              <Col sm={10}>
-                <Input
-                  type="text"
-                  name="name"
-                  placeholder="Child Name"
-                  value={this.state.input.name}
-                  onChange={this.handleChanges}
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup row>
-              <Label for="calorieGoal" sm={2}>
-                Calorie Goal
-              </Label>
-              <Col sm={10}>
-                <Input
-                  type="text"
-                  name="calorieGoal"
-                  placeholder="Calorie Goal"
-                  value={this.state.input.calorieGoal}
-                  onChange={this.handleChanges}
-                />
-              </Col>
-            </FormGroup>
-          <ButtonSC>
-            SUBMIT <span class="fas fa-baby-carriage" />
-          </ButtonSC>
-          </Form>
+          <form>
+              <div>
+                <SpanSC>
+                  Name:
+                </SpanSC>
+                  <InputSC
+                    type="text"
+                    name="name"
+                    placeholder="Child Name"
+                    value={this.state.editInput.name}
+                    onChange={this.changeHandler}
+                  />
+              </div>
+              <div>
+                <SpanSC>
+                  Calorie Goal:
+                </SpanSC>
+                  <InputSC
+                    type="text"
+                    name="calorieGoal"
+                    placeholder="Calorie Goal"
+                    value={this.state.editInput.calorieGoal}
+                    onChange={this.changeHandler}
+                  />
+              </div>
+          </form>
         )}
         <div>
-          <button onClick={this.editHandler}>{this.state.editActive ? "submit" : "edit"}</button>
-          <button onClick={this.deleteHandler}>delete</button>
+          <ButtonSC onClick={this.editHandler}>{this.state.editActive ? "submit" : "edit"}</ButtonSC>
+          <ButtonSC onClick={this.deleteHandler}>delete</ButtonSC>
         </div>
-      </div>
+      </ChildBoxSC>
     );
   }
 }

@@ -327,6 +327,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         currentChild: action.payload
       };
+    
+
     default:
       return state;
   }
