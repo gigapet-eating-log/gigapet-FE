@@ -8,6 +8,7 @@ import Home from './components/Home';
 import TopBar from './components/TopBar';
 import AddEntry from './components/AddEntry';
 import ManageAccount from './components/ManageAccount';
+import History from './components/History';
 import PrivateRoute from './components/PrivateRoute';
 import SortDateForm from './components/SortDateForm';
 import SortDateFormSpecific from './components/SortDateFormSpecific';
