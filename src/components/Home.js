@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { getChildren, getUser, setCurrentChild } from "../actions";
+import moment from "moment";
+import { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood } from "../actions";
 import { colors } from "../sharedStyles";
 import AddChild from "./AddChild";
 
@@ -38,9 +39,7 @@ const SelectBoxSC = styled.div`
   font-weight: bold;
   outline: ${colors.lavender};
   border: 1px solid ${colors.darkestLavender};
-  border-radius: px;
-  /* border-radius: 4px;
-  border: 1px solid #bbb; */
+  border-radius: 8px;
   margin: 20px auto;
   padding: 0;
   user-select: none;
@@ -87,25 +86,58 @@ const dogeAge = "Puppy";
 const dogeMood = "2";
 
 class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      pupStatus: {
+        age: "Puppy",
+        mood: "1"
+      }
+    }
+  }
   componentDidMount() {
     const id = localStorage.getItem("currentUserId");
-    console.log(id);
     this.props
       .getChildren(id)
-      .then(() =>{
+      .then(() => {
         !this.props.currentChild &&
         this.props.kids[0] &&
-        this.props.setCurrentChild(this.props.kids[0])
-      });
+        this.props.hasChildrenInit() &&
+        this.props.setCurrentChild(this.props.kids[0]) &&
+        this.props.getFood(this.props.kids[0].id)
+      })
     this.props.getUser(id);
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (this.propsfoodEntries && prevProps.foodEntries === this.props.foodEntries) {
+      this.setState({
+        pupStatus: this.checkPupStatus()
+      })
+    }
   }
 
   childSelectHandler = ev => {
     const selectedChild = this.props.kids.find(el => {
-      return el.id == ev.target.value;
+      return el.id === ev.target.value;
     });
     this.props.setCurrentChild(selectedChild);
   };
+
+  checkPupStatus = () => {
+    console.log(this.props.foodEntries)
+    const foodDates = this.props.foodEntries.map(item => {
+      return Number(item.date.replace(/-/g, ""))
+    })
+    const currentDate = moment().format("YYYYMMDD");
+    const lastMeal = Math.max(...foodDates);
+    let age = "Puppy"
+    let mood = "1"
+    if (foodDates.length >= 10) {age = "Adult"}
+    if (currentDate - lastMeal <= 0) {mood = 2}
+    else if (currentDate - lastMeal >= 2) {mood = 3}
+    return { "age": age, "mood": mood }
+  }
 
   render() {
     return (
@@ -113,7 +145,7 @@ class Home extends React.Component {
         <Title>GIGAPET</Title>
         {this.props.kids && this.props.kids[0] && (
           <DogeBox>
-            <Doge src={`img/Dog-${dogeAge}-${dogeMood}.gif`} alt="" />
+            <Doge src={`img/Dog-${this.state.pupStatus.age}-${this.state.pupStatus.mood}.gif`} alt="" />
           </DogeBox>
         )}
         {this.props.kids && this.props.kids[0] && (
@@ -145,10 +177,12 @@ class Home extends React.Component {
 const mapStateToProps = state => ({
   kids: state.kids,
   currentChild: state.currentChild,
+  hasChildren: state.hasChildren,
+  foodEntries: state.foodEntries,
   pending: state.pending
 });
 
 export default connect(
   mapStateToProps,
-  { getChildren, getUser, setCurrentChild }
+  { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood}
 )(Home);

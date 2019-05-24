@@ -6,7 +6,7 @@ const PrivateRoute = ({ component: Component, ...props }) => {
   console.log(props)
   return <Route {...props} render={() => {
       if (localStorage.getItem('token')) {
-        if (props.kids && props.kids[0]) {
+        if (props.hasChildren) {
           return <Component /> 
         } else {
           return <Redirect to="./" />  
@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, ...props }) => {
 }
 
 const mapStateToProps = state => ({
-  kids: state.kids
+  hasChildren: state.hasChildren
 });
 
 export default connect(

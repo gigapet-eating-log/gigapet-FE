@@ -201,6 +201,14 @@ export const deleteFood = id => dispatch => {
     });
 };
 
+export const HAS_CHILDREN_INIT = "HAS_CHILDREN_INIT"
+
+export const hasChildrenInit = () => {
+  return {
+    type: HAS_CHILDREN_INIT
+  }
+}
+
 export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
   "CHILDREN_GET_START",
   "CHILDREN_GET_SUCCESS",

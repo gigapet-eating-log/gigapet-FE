@@ -27,6 +27,7 @@ import {
   ENTRY_DELETE_START,
   ENTRY_DELETE_SUCCESS,
   ENTRY_DELETE_FAIL,
+  HAS_CHILDREN_INIT,
   CHILDREN_GET_START,
   CHILDREN_GET_SUCCESS,
   CHILDREN_GET_FAIL,
@@ -47,6 +48,7 @@ const initialState = {
   kids: [],
   currentUser: null,
   currentChild: null,
+  hasChildren: false,
   pending: {
     login: false,
     register: false,
@@ -303,6 +305,11 @@ const rootReducer = (state = initialState, action) => {
         },
         error: action.payload
       };
+    case HAS_CHILDREN_INIT:
+      return {
+        ...state,
+        hasChildren: true
+      };
     case CHILDREN_GET_START:
       return {
         ...state,
@@ -344,6 +351,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         kids: action.payload,
+        hasChildren: true,
         pending: {
           ...state.pending,
           postChildren: false
