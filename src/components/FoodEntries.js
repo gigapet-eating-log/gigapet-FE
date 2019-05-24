@@ -1,12 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import { deleteFood } from "../actions";
+
 
 // takes individual objects from filtered array or original array and display the contents
 class FoodEntries extends Component {
     constructor(props) {
         super(props);
 
+    }
+
+    // Required for Delete
+    // {
+    //     "parentId":"9",
+    //     "date":"2019-01-01",
+    //     "id":"1"
+    // }
+
+    delete = event => {
+        event.preventDefault();
+        const infoDelete = {
+            parentId: localStorage.getItem('currentUserId'),
+            date: this.props.entry.date,
+            id: `${this.props.entry.id}`
+        }
+
+        console.log(infoDelete);
+
+        this.props.deleteFood(infoDelete);
     }
 
     render() {
@@ -55,5 +77,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {}
+    {deleteFood}
 )(FoodEntries);

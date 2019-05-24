@@ -11,9 +11,9 @@ class History extends Component {
             <div className='history'>
                 <nav className='nav'>
                     <NavLink to='/history/advanced'>Advanced Search</NavLink>
-                    <NavLink to='/history/day'>Find by Day</NavLink>
-                    <NavLink to='/history/specific'>Find by Range</NavLink>
-                    <NavLink to='/history/category'>Find by Category</NavLink>
+                    {/* <NavLink to='/history/day'>Find by Day</NavLink>
+                    <NavLink to='/history/specific'>Find by Range</NavLink> */}
+                    {/* <NavLink to='/history/category'>Find by Category</NavLink> */}
                 </nav>
 
             </div>

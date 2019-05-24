@@ -140,8 +140,10 @@ export const [ENTRY_DELETE_START, ENTRY_DELETE_SUCCESS, ENTRY_DELETE_FAIL] = [
 
 export const deleteFood = id => dispatch => {
   dispatch({ type: ENTRY_DELETE_START });
-  axios
-    .delete(`https://giga-back-end.herokuapp.com/api/users/register${id}`)
+  console.log("DELETE started:", id);
+
+   axiosWithAuth()
+    .delete('https://giga-back-end.herokuapp.com/api/app/deletefood', id)
     .then(res => {
       dispatch({ type: ENTRY_DELETE_SUCCESS, payload: res.data });
     })
