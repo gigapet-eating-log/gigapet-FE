@@ -13,6 +13,10 @@ import PrivateRoute from './components/PrivateRoute';
 import PrivateRoute2 from './components/PrivateRoute2';
 import SortDateForm from './components/SortDateForm';
 import SortDateFormSpecific from './components/SortDateFormSpecific';
+import SortDateFormCategory from './components/SortDateFormCategory';
+import SortFormAdvanced from './components/SortFormAdvanced';
+import EditEntry from './components/EditEntry';
+
 
 function App() {
   return (
@@ -28,10 +32,19 @@ function App() {
         <PrivateRoute2 path="/history" component={History}/>
         <PrivateRoute2 path="/history/day" component={SortDateForm}/>
         <PrivateRoute2 path="/history/specific" component={SortDateFormSpecific}/>
+        <PrivateRoute2 path="/history/category" component={SortDateFormCategory}/>
+        <PrivateRoute2 path="/history/advanced" component={SortFormAdvanced}/>
+        
+        {/* <PrivateRoute2 path="/edit-entry" component={EditEntry}/> */}
+
+        <Route path="/edit-entry" render={props => (<EditEntry {...props} stateRouter={props.location.state} />)}/>
+
       </Router>
     </div>
   );
 }
+
+// <Route path='/movies/:id' render={props => (<Movie {...props} addToSavedList={this.addToSavedList} />)} />
 
 export default App;
 

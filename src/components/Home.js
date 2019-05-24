@@ -96,6 +96,8 @@ class Home extends React.Component {
     }
   }
   componentDidMount() {
+    console.log("CDM Home")
+    console.log(this.props.currentChild);
     const id = localStorage.getItem("currentUserId");
     this.props
       .getChildren(id)
@@ -118,10 +120,12 @@ class Home extends React.Component {
   }
 
   childSelectHandler = ev => {
+    console.log(ev.target.value)
     const selectedChild = this.props.kids.find(el => {
       return el.id === ev.target.value;
     });
     this.props.setCurrentChild(selectedChild);
+    this.props.getFood(this.props.currentChild.id)
   };
 
   checkPupStatus = () => {
