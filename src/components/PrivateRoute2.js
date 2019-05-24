@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...props }) => {
-  console.log(props)
   return <Route {...props} render={() => {
       if (localStorage.getItem('token')) {
         if (props.hasChildren) {
@@ -12,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...props }) => {
           return <Redirect to="./" />  
         }
       } else {
-        return <Redirect to="./auth" />
+        return <Redirect to="./signUp" />
       }
   }} />
 }

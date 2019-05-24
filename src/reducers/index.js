@@ -41,6 +41,7 @@ import {
   CHILDREN_DELETE_SUCCESS,
   CHILDREN_DELETE_FAIL,
   SET_CURRENT_CHILD,
+  SET_PUP_STATUS,
   FILTERED_TO_STATE
 } from "../actions";
 
@@ -50,6 +51,10 @@ const initialState = {
   currentUser: null,
   currentChild: null,
   hasChildren: false,
+  pupStatus: {
+    age: "Puppy",
+    mood: "1"
+  },
   filteredEntries: [
     // {
     //   id: 5,
@@ -296,8 +301,6 @@ const rootReducer = (state = initialState, action) => {
         error: ""
       };
     case ENTRY_POST_SUCCESS:
-      console.log(action.payload);
-
       return {
         ...state,
         pending: {
@@ -484,6 +487,11 @@ const rootReducer = (state = initialState, action) => {
         },
         error: action.payload
       };
+    case SET_PUP_STATUS:
+      return {
+        ...state,
+        pupStatus: action.payload
+      }
     case FILTERED_TO_STATE:
       return {
         ...state,

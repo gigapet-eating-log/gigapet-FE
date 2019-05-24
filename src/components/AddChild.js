@@ -98,7 +98,6 @@ class AddChild extends Component {
   addChild = event => {
     event.preventDefault();
     const id = localStorage.getItem("currentUserId");
-    console.log("PARENTID", id)
     const newChild = {
       parentId: id,
       name: this.state.input.name,

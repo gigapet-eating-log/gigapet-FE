@@ -121,7 +121,6 @@ class AddEntry extends React.Component {
     this.setState({
       input: { ...this.state.input, [ev.target.name]: ev.target.value }
     });
-    console.log(this.state.input)
   };
 
   submitHandler = ev => {
@@ -138,7 +137,6 @@ class AddEntry extends React.Component {
     const selectedChild = this.props.kids.find(el => {
       return el.id == inp.childId;
     });
-    console.log(selectedChild);
     const newEntry = {
       name: selectedChild.name,
       mealTime: "lunch",
@@ -147,9 +145,8 @@ class AddEntry extends React.Component {
       parentId: localStorage.getItem("currentUserId"),
       calories: inp.calories,
       date: inp.date,
-      childId: inp.childId
+      childId: selectedChild.id
     };
-    console.log(newEntry);
     this.props.postFood(newEntry);
     this.setState({
       input: {
