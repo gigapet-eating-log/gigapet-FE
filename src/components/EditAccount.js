@@ -4,18 +4,41 @@ import { getUser, putUser, deleteUser } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
+const EditAccountSC = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: ${colors.lavender};
+  max-width: 500px;
+  margin: 30px auto 0;
+  border: 1px outset rgb(200, 200, 200);
+  border-radius: 10px;
+  overflow: hidden;
+`
+
 const DetailBoxSC = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  border: 3px solid ${colors.purple};
-  border-radius: 10px;
   width: 180px;
   height: 110px;
   margin: 0px auto;
   padding: 10px;
 `;
+
+const TitleSC = styled.h2`
+  font-family: ${fonts.title};
+  font-weight: bold;
+  font-size: 26px;
+  letter-spacing: 0.05rem;
+  background: ${colors.lightPurple};
+  align-self: stretch;
+  color: white;
+  margin: 0;
+  padding: 10px;
+`
+
 const H3SC = styled.h3`
   margin: 0;
   padding: 0;
@@ -115,8 +138,8 @@ class EditAccount extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Edit Account Details</h2>
+      <EditAccountSC>
+        <TitleSC>Edit Account Details</TitleSC>
         <DetailBoxSC>
           {!this.state.editActive ? (
             <div>
@@ -152,7 +175,7 @@ class EditAccount extends React.Component {
             <ButtonSC onClick={this.deleteHandler}>Delete</ButtonSC>
           </div>
         </DetailBoxSC>
-      </div>
+      </EditAccountSC>
     );
   }
 }

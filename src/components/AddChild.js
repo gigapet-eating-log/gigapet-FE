@@ -5,16 +5,38 @@ import { getChildren, postChildren } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
+const AddChildSC = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: ${colors.lavender};
+  width: 280px;
+  margin: 30px;
+  border: 1px outset rgb(200, 200, 200);
+  border-radius: 10px;
+  overflow: hidden;
+`
+
+const TitleSC = styled.h2`
+  font-family: ${fonts.title};
+  font-weight: bold;
+  font-size: 26px;
+  letter-spacing: 0.05rem;
+  background: ${colors.lightPurple};
+  align-self: stretch;
+  color: white;
+  margin: 0;
+  padding: 10px;
+`
+
 const AddChildBoxSC = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  border: 3px solid ${colors.purple};
-  border-radius: 10px;
   width: 220px;
   height: 110px;
-  margin: 10px auto;
+  margin: 0;
   padding: 10px;
 `;
 
@@ -77,13 +99,14 @@ class AddChild extends Component {
   addChild = event => {
     event.preventDefault();
     const id = localStorage.getItem("currentUserId");
+    console.log("PARENTID", id)
     const newChild = {
       parentId: id,
       name: this.state.input.name,
       calorieGoal: this.state.input.calorieGoal
     };
     this.props.postChildren(newChild)
-      .then(this.props.getChildren(id))
+      .then(() => this.props.getChildren(id))
     this.setState({
       input: {
         name: "",
@@ -94,8 +117,8 @@ class AddChild extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Add a Child</h2>
+      <AddChildSC>
+        <TitleSC>Add a Child</TitleSC>
         <AddChildBoxSC onSubmit={this.addChild}>
           <InputLineSC>
             <SpanSC>Child Name:</SpanSC>
@@ -117,13 +140,13 @@ class AddChild extends Component {
           </InputLineSC>
           <ButtonSC>Submit</ButtonSC>
         </AddChildBoxSC>
-      </div>
+      </AddChildSC>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  children: state.children
+  kids: state.kids
 });
 
 export default connect(

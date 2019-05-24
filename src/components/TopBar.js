@@ -106,8 +106,12 @@ class TopBar extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  pending: state.pending
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { logout }
 )(TopBar);
 

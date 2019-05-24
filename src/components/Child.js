@@ -4,13 +4,15 @@ import { putChildren, deleteChildren } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
+const EditFormSC = styled.form`
+  margin-bottom: 10px;
+`
+
 const ChildBoxSC = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  border: 3px solid ${colors.purple};
-  border-radius: 10px;
   width: 180px;
   height: 110px;
   margin: 0 auto;
@@ -35,7 +37,7 @@ const SpanSC = styled.span`
   display: flex;
   align-items: center;
   width: 100px;
-  margin-right: 10px;
+  margin: 0;
 `;
 
 const InputSC = styled.input`
@@ -115,7 +117,7 @@ class Child extends React.Component {
             <PSC>Calorie goal: {this.props.data.calorieGoal}</PSC>
           </div>
         ) : (
-          <form>
+          <EditFormSC>
             <InputLineSC>
               <SpanSC>Child Name:</SpanSC>
               <InputSC
@@ -136,7 +138,7 @@ class Child extends React.Component {
                 onChange={this.changeHandler}
               />
             </InputLineSC>
-          </form>
+          </EditFormSC>
         )}
         <div>
           <ButtonSC onClick={this.editHandler}>

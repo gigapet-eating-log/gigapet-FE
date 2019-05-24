@@ -11,7 +11,7 @@ const ManageAccountSC = styled.div`
 
 const ManageChildrenSC = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
 `
 
@@ -23,7 +23,6 @@ const ManageAccount = () => {
         <EditChildren />
       </ManageChildrenSC>
       <EditAccount />
-
     </ManageAccountSC>
   );
 };

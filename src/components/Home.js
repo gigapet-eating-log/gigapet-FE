@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { getChildren, setCurrentChild } from "../actions";
+import { getChildren, getUser, setCurrentChild } from "../actions";
 import { colors } from "../sharedStyles";
+import AddChild from "./AddChild";
 
 const Title = styled.h1`
   font-family: "Press Start 2P", cursive;
@@ -37,7 +38,7 @@ const SelectBoxSC = styled.div`
   font-weight: bold;
   outline: ${colors.lavender};
   border: 1px solid ${colors.darkestLavender};
-  border-radius: 8px;
+  border-radius: px;
   /* border-radius: 4px;
   border: 1px solid #bbb; */
   margin: 20px auto;
@@ -66,7 +67,20 @@ const SelectSC = styled.select`
 `;
 
 const OptionSC = styled.option`
-    border-radius: 10px;
+  border-radius: 10px;
+`;
+
+const AddChildPromptSC = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+const AddChildMessageSC = styled.p`
+  font-size: 1.4rem;
+  max-width: 800px;
 `;
 
 const dogeAge = "Puppy";
@@ -75,7 +89,15 @@ const dogeMood = "2";
 class Home extends React.Component {
   componentDidMount() {
     const id = localStorage.getItem("currentUserId");
-    this.props.getChildren(id);
+    console.log(id);
+    this.props
+      .getChildren(id)
+      .then(() =>{
+        !this.props.currentChild &&
+        this.props.kids[0] &&
+        this.props.setCurrentChild(this.props.kids[0])
+      });
+    this.props.getUser(id);
   }
 
   childSelectHandler = ev => {
@@ -89,18 +111,32 @@ class Home extends React.Component {
     return (
       <div>
         <Title>GIGAPET</Title>
-        <DogeBox>
-          <Doge src={`img/Dog-${dogeAge}-${dogeMood}.gif`} alt="" />
-        </DogeBox>
-        <SelectBoxSC>
-          <LabelSC>OWNER</LabelSC>
-          <SelectSC onChange={this.childSelectHandler}>
-            {this.props.kids &&
-              this.props.kids.map(el => {
+        {this.props.kids && this.props.kids[0] && (
+          <DogeBox>
+            <Doge src={`img/Dog-${dogeAge}-${dogeMood}.gif`} alt="" />
+          </DogeBox>
+        )}
+        {this.props.kids && this.props.kids[0] && (
+          <SelectBoxSC>
+            <LabelSC>OWNER</LabelSC>
+            <SelectSC onChange={this.childSelectHandler}>
+              {this.props.kids && this.props.kids.map(el => {
                 return <OptionSC value={el.id}>{el.name}</OptionSC>;
               })}
-          </SelectSC>
-        </SelectBoxSC>
+            </SelectSC>
+          </SelectBoxSC>
+        )}
+        {this.props.kids && !this.props.kids[0] && (
+          <AddChildPromptSC>
+            <AddChildMessageSC>
+              Welcome to Gigapet! This app is designed to help your children
+              develop healthy and consistent eating habits. Please add a child
+              to your account and give him or her a daily calorie goal to get
+              started.
+            </AddChildMessageSC>
+            <AddChild />
+          </AddChildPromptSC>
+        )}
       </div>
     );
   }
@@ -108,10 +144,11 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({
   kids: state.kids,
-  currentChild: state.currentChild
+  currentChild: state.currentChild,
+  pending: state.pending
 });
 
 export default connect(
   mapStateToProps,
-  { getChildren, setCurrentChild }
+  { getChildren, getUser, setCurrentChild }
 )(Home);

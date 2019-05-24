@@ -62,7 +62,6 @@ export const LOGOUT = "LOGOUT";
 
 export const logout = () => {
   localStorage.clear();
-  window.location.reload();
   return {
     type: LOGOUT
   }
@@ -94,7 +93,7 @@ export const [USER_PUT_START, USER_PUT_SUCCESS, USER_PUT_FAIL] = [
 
 export const putUser = (input, id) => dispatch => {
   dispatch({ type: USER_PUT_START });
-  axios
+  axiosWithAuth()
     .put(`https://giga-back-end.herokuapp.com/api/users/${id}`, input)
     .then(res => {
       dispatch({ type: USER_PUT_SUCCESS, payload: res.data });
@@ -112,13 +111,14 @@ export const [USER_DELETE_START, USER_DELETE_SUCCESS, USER_DELETE_FAIL] = [
 
 export const deleteUser = id => dispatch => {
   dispatch({ type: USER_DELETE_START });
-  axios
+  axiosWithAuth()
     .delete(`https://giga-back-end.herokuapp.com/api/users/${id}`)
     .then(res => {
       dispatch({ type: USER_DELETE_SUCCESS, payload: res.data });
     })
     .then(() => {
-      logout()
+      window.location.reload();
+      logout();
     })
     .catch(err => {
       dispatch({ type: USER_DELETE_FAIL, payload: err });
@@ -153,7 +153,7 @@ export const [ENTRY_POST_START, ENTRY_POST_SUCCESS, ENTRY_POST_FAIL] = [
 
 export const postFood = newEntry => dispatch => {
   dispatch({ type: ENTRY_POST_START });
-  axios
+  axiosWithAuth()
     .post("https://giga-back-end.herokuapp.com/api/app/addfood", newEntry)
     .then(res => {
       console.log("result:", res);
