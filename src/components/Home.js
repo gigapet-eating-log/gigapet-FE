@@ -111,7 +111,7 @@ class Home extends React.Component {
   };
 
   checkPupStatus = () => {
-    if (this.props.foodEntries.length === 0) {
+    if (!this.props.foodEntries) {
       return this.props.setPupStatus({ "age": "Puppy", "mood": "1" })}
     const foodDates = this.props.foodEntries.map(item => {
       return Number(item.date.replace(/-/g, ""))
@@ -130,7 +130,7 @@ class Home extends React.Component {
     return (
       <div>
         <Title>GIGAPET</Title>
-        {this.props.kids && this.props.kids[0] && (
+        {this.props.kids && this.props.kids[0] && this.props.pupStatus && (
           <DogeBox>
             <Doge src={`img/Dog-${this.props.pupStatus.age}-${this.props.pupStatus.mood}.gif`} alt="" />
           </DogeBox>
