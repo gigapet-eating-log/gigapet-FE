@@ -27,11 +27,11 @@ function App() {
         <PrivateRoute exact path='/' component={Home} />
         <PrivateRoute2 path="/add-entry" component={AddEntry}/>
         <PrivateRoute2 path="/manage-account" component={ManageAccount}/>
-        <PrivateRoute2 path="/history" component={History}/>
+        {/* <PrivateRoute2 path="/history" component={History}/>
         <PrivateRoute2 path="/history/day" component={SortDateForm}/>
         <PrivateRoute2 path="/history/specific" component={SortDateFormSpecific}/>
-        <PrivateRoute2 path="/history/category" component={SortDateFormCategory}/>
-        <PrivateRoute2 path="/history/advanced" component={SortFormAdvanced}/>
+        <PrivateRoute2 path="/history/category" component={SortDateFormCategory}/> */}
+        <PrivateRoute2 path="/history" component={SortFormAdvanced}/>
         
         {/* <PrivateRoute2 path="/edit-entry" component={EditEntry}/> */}
 

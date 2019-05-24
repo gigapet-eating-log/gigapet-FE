@@ -11,7 +11,7 @@ export const FormSC = styled.div`
   align-items: center;
   background: ${colors.lavender};
   max-width: 500px;
-  margin: 0 auto;
+  margin: 30px auto;
   border: 1px outset rgb(200, 200, 200);
   border-radius: 10px;
   overflow: hidden;
@@ -162,7 +162,7 @@ class AddEntry extends React.Component {
   render() {
     return (
       <FormSC onSubmit={this.submitHandler}>
-        <TitleSC>ADD SOME FOOD</TitleSC>
+        <TitleSC>Add A Food Entry</TitleSC>
         <InputBoxSC spellCheck="false">
           <SelectSC
             placeholder={this.state.input.childId === "x"}
