@@ -134,8 +134,6 @@ export const [ENTRY_GET_START, ENTRY_GET_SUCCESS, ENTRY_GET_FAIL] = [
 ];
 
 export const getFood = childId => dispatch => {
-  console.log(childId); // 5 or 9 right now
-  
   dispatch({ type: ENTRY_GET_START });
   axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/getfood/${childId}`)
@@ -224,7 +222,6 @@ export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
 ];
 
 export const getChildren = id => dispatch => {
-  // console.log(id)
   dispatch({ type: CHILDREN_GET_START });
   return axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/childname/${id}`)
@@ -304,6 +301,15 @@ export const setCurrentChild = selectedChild => {
   return {
     type: SET_CURRENT_CHILD,
     payload: selectedChild
+  }
+}
+
+export const SET_PUP_STATUS = "SET_PUP_STATUS";
+
+export const setPupStatus = (status) => {
+  return {
+    type: SET_PUP_STATUS,
+    payload: status
   }
 }
 
