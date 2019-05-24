@@ -26,8 +26,6 @@ class SortFormAdvanced extends Component {
         const id = localStorage.getItem("currentUserId");
         this.props.getChildren(id);
 
-        // this.props.getFood(this.props.currentChild.id);
-
     }
 
     childSelectHandler = ev => {
@@ -35,6 +33,7 @@ class SortFormAdvanced extends Component {
             return el.id == ev.target.value;
         });
         this.props.setCurrentChild(selectedChild);
+
 
     };
 

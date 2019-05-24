@@ -303,6 +303,8 @@ export const setCurrentChild = selectedChild => {
   return {
     type: SET_CURRENT_CHILD,
     payload: selectedChild
+  }
+}
 
 export const FILTERED_TO_STATE = "FILTERED_TO_STATE";
 
