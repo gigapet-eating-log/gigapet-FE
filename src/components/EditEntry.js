@@ -1,9 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-import { postFood } from "../actions";
+import { connect } from 'react-redux';
 import styled from "styled-components";
 import { colors, fonts } from "../sharedStyles";
 import moment from "moment";
+import { putFood } from "../actions";
+
 
 export const FormSC = styled.div`
   display: flex;
@@ -93,12 +94,11 @@ export const InputButtonSC = styled(ButtonSC)`
   display: ${props => (props.updateTog ? "none" : "inline-block")};
 `;
 
-class AddEntry extends React.Component {
-  constructor() {
-    super();
+class EditEntry extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       input: {
-        childId: "x",
         food: "",
         calories: "",
         date: "",
@@ -108,6 +108,9 @@ class AddEntry extends React.Component {
   }
 
   componentDidMount() {
+      console.log(this.state.input)
+      console.log(this.props.location.state);
+
     const date = moment().format("YYYY-MM-DD");
     this.setState({
       input: {
@@ -135,25 +138,30 @@ class AddEntry extends React.Component {
     ) {
       return;
     }
-    const selectedChild = this.props.kids.find(el => {
-      return el.id == inp.childId;
-    });
-    console.log(selectedChild);
-    const newEntry = {
-      name: selectedChild.name,
-      mealTime: "lunch",
-      foodType: inp.category,
-      foodName: inp.food,
-      parentId: localStorage.getItem("currentUserId"),
-      calories: inp.calories,
-      date: inp.date,
-      childId: inp.childId
-    };
-    console.log(newEntry);
-    this.props.postFood(newEntry);
+
+    // food: "",
+    // calories: "",
+    // date: "",
+    // category: "x"
+
+    const editedEntry = {
+        name: this.props.location.state.name.name,
+	    mealTime: this.props.location.state.mealTime,
+	    foodType: this.state.input.category,
+	    foodName: this.state.input.food,
+	    parentId: this.props.location.state.parentId,
+	    calories: this.state.input.calories,
+	    date: this.state.input.date,
+	    id: this.props.location.state.id
+    }
+
+    console.log("Edited:", editedEntry)
+
+    this.props.putFood(editedEntry);
+
+
     this.setState({
       input: {
-        childId: "x",
         food: "",
         date: moment().format("YYYY-MM-DD"),
         category: "x",
@@ -163,25 +171,25 @@ class AddEntry extends React.Component {
   };
 
   render() {
+
     return (
+        <React.Fragment>
+        <div className='previous-form'>
+                <p style={{textDecoration: 'underline'}}>Previous Entry</p>
+                {this.props.location.state.foodType === 'vegetables' && <i class="fas fa-carrot fa-2x"></i>}
+                {this.props.location.state.foodType === 'fruits' && <i class="fas fa-apple-alt fa-2x"></i>}
+                {this.props.location.state.foodType === 'grains' && <i class="fas fa-bread-slice fa-2x"></i>}
+                {this.props.location.state.foodType === 'dairy' && <i class="fas fa-cheese fa-2x"></i>}
+                {this.props.location.state.foodType === 'proteins' && <i class="fas fa-bacon fa-2x"></i>}
+                {this.props.location.state.foodType === 'junk' && <i class="fas fa-cookie fa-2x"></i>}
+
+                <p><strong>Food Item</strong>: {this.props.location.state.foodName}</p>
+                <p><strong>Food Type</strong>: {this.props.location.state.foodType}</p>
+                <p><strong>Date</strong>: {this.props.location.state.date}</p>
+        </div>
       <FormSC onSubmit={this.submitHandler}>
-        <TitleSC>ADD SOME FOOD</TitleSC>
+        <TitleSC>Edit Entry</TitleSC>
         <InputBoxSC spellCheck="false">
-          <SelectSC
-            placeholder={this.state.input.childId === "x"}
-            name="childId"
-            value={this.state.input.childId}
-            onChange={this.changeHandler}
-            required
-          >
-            <OptionSC value="x" hidden>
-              Child
-            </OptionSC>
-            {this.props.kids &&
-              this.props.kids.map(el => {
-                return <OptionSC value={el.id}>{el.name}</OptionSC>;
-              })}
-          </SelectSC>
           <InputSC
             type="text"
             name="food"
@@ -225,21 +233,17 @@ class AddEntry extends React.Component {
         </InputBoxSC>
         <ButtonBoxSC>
           <InputButtonSC onClick={this.submitHandler}>
-            Send the pupper food
+            Edit
           </InputButtonSC>
         </ButtonBoxSC>
       </FormSC>
+      </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  currentChild: state.currentChild,
-  currentUserID: state.currentUserID,
-  kids: state.kids
-});
 
 export default connect(
-  mapStateToProps,
-  { postFood }
-)(AddEntry);
+    null,
+    { putFood }
+)(EditEntry);

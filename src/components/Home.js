@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { getChildren, setCurrentChild } from "../actions";
+import { getChildren, setCurrentChild, getFood } from "../actions";
 import { colors } from "../sharedStyles";
 
 const Title = styled.h1`
@@ -28,7 +28,7 @@ const Doge = styled.img`
 const SelectBoxSC = styled.div`
   display: flex;
   position: relative;
-  width: 100px;
+  width: 200px;
   flex-direction: column;
   color: ${colors.purple};
   background: white;
@@ -63,16 +63,26 @@ const dogeAge = "Puppy";
 const dogeMood = "2";
 
 class Home extends React.Component {
+
   componentDidMount() {
+    console.log("CDM Home")
+    console.log(this.props.currentChild);
     const id = localStorage.getItem("currentUserId");
-    this.props.getChildren(id);
+    console.log(id);
+    this.props.getChildren(id)
+    .then(
+       (!this.props.currentChild) && 
+      this.props.setCurrentChild(this.props.kids[0])
+    )
   }
 
   childSelectHandler = ev => {
+    console.log(ev.target.value)
     const selectedChild = this.props.kids.find(el => {
       return el.id == ev.target.value;
     });
     this.props.setCurrentChild(selectedChild);
+    this.props.getFood(this.props.currentChild.id)
   };
 
   render() {
@@ -88,7 +98,7 @@ class Home extends React.Component {
           <SelectSC onChange={this.childSelectHandler}>
             {this.props.kids &&
               this.props.kids.map(el => {
-                return <option value={el.id}>{el.name.toUpperCase()}</option>;
+                return <option key={el.id} value={el.id}>{el.name.toUpperCase()}</option>;
               })}
           </SelectSC>
         </SelectBoxSC>
@@ -104,5 +114,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getChildren, setCurrentChild }
+  { getChildren, setCurrentChild, getFood }
 )(Home);
