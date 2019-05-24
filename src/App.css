@@ -14,9 +14,11 @@
     margin:5%;
   }
 
-  .options i {
+  .options i,a {
     cursor:pointer;
+    text-decoration:none;
   }
+
   
   .active {
     background-color:lightblue;
