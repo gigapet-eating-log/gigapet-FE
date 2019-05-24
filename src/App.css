@@ -1,0 +1,79 @@
+.App {
+    text-align: center;
+  }
+
+  .advanced-search {
+    width:100%;
+    margin:1%;
+  }
+  
+  a, i {
+    text-decoration: none;
+    padding:1%;
+    margin:5%;
+  }
+
+  .options i,a {
+    cursor:pointer;
+    text-decoration:none;
+  }
+
+  
+  .active {
+    background-color:lightblue;
+  }
+  
+  .paw {
+    border: 1px solid black;
+    margin:0.5%;
+  }
+
+  .nav {
+    margin: 1%;
+  }
+
+  .card-container {
+    margin: 1%;
+    display:flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items:center;
+    width: 98%;
+  }
+
+  .entry-card {
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+    margin:1%;
+  }
+
+  .previous-form {
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+    margin:1% auto;
+  }
+
+  .history nav a {
+    border: 1px solid black;
+    margin: 1%;
+    cursor: pointer;
+  }
+
+  .history nav a:hover {
+    background-color:black;
+    color:white;
+  }
+
+  .search {
+    margin: 0 auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:30px;
+  }
+
+  
+  
+  
