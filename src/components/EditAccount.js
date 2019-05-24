@@ -113,7 +113,6 @@ class EditAccount extends React.Component {
         }
       });
     } else {
-      console.log(this.state.editInput)
       const id = localStorage.getItem("currentUserId");
       this.props.putUser(this.state.editInput, id);
       this.setState({

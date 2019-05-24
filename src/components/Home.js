@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
-import { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood } from "../actions";
+import { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood, setPupStatus } from "../actions";
 import { colors } from "../sharedStyles";
 import AddChild from "./AddChild";
 
@@ -38,29 +37,25 @@ const SelectBoxSC = styled.div`
   background: white;
   font-weight: bold;
   outline: ${colors.lavender};
-  border: 1px solid ${colors.darkestLavender};
-  border-radius: 8px;
   margin: 20px auto;
   padding: 0;
   user-select: none;
 `;
 
 const LabelSC = styled.label`
-  position: absolute;
-  padding-left: 14px;
   color: ${colors.darkestLavender};
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 5px;
 `;
 
 const SelectSC = styled.select`
   color: ${colors.darkestLavender};
   width: 100%;
   background: transparent;
-  border: none;
   font-size: 16px;
-  border-radius: 10px;
-  padding: 25px 10px 5px;
+  border-radius: 5px;
+  padding: 5px 10px 5px;
   z-index: 3;
   outline: none;
 `;
@@ -82,9 +77,6 @@ const AddChildMessageSC = styled.p`
   max-width: 800px;
 `;
 
-const dogeAge = "Puppy";
-const dogeMood = "2";
-
 class Home extends React.Component {
   constructor() {
     super();
@@ -95,42 +87,32 @@ class Home extends React.Component {
       }
     }
   }
-
   componentDidMount() {
-    console.log("CDM Home")
-    console.log(this.props.currentChild);
     const id = localStorage.getItem("currentUserId");
     this.props
       .getChildren(id)
       .then(() => {
-        !this.props.currentChild &&
+        this.props.kids &&
         this.props.kids[0] &&
         this.props.hasChildrenInit() &&
-        this.props.setCurrentChild(this.props.kids[0]) &&
         this.props.getFood(this.props.kids[0].id)
+      })
+      .then(() => {
+        !this.props.currentChild && this.props.setCurrentChild(this.props.kids[0]);
+        this.checkPupStatus();
       })
     this.props.getUser(id);
   }
 
-  componentDidUpdate(prevState, prevProps) {
-    if (this.propsfoodEntries && prevProps.foodEntries === this.props.foodEntries) {
-      this.setState({
-        pupStatus: this.checkPupStatus()
-      })
-    }
-  }
-
   childSelectHandler = ev => {
-    console.log(ev.target.value)
-    const selectedChild = this.props.kids.find(el => {
-      return el.id === ev.target.value;
-    });
-    this.props.setCurrentChild(selectedChild);
+    this.props.setCurrentChild(this.props.kids[ev.target.value]);
     this.props.getFood(this.props.currentChild.id)
+    this.checkPupStatus();
   };
 
   checkPupStatus = () => {
-    console.log(this.props.foodEntries)
+    if (this.props.foodEntries.length === 0) {
+      return this.props.setPupStatus({ "age": "Puppy", "mood": "1" })}
     const foodDates = this.props.foodEntries.map(item => {
       return Number(item.date.replace(/-/g, ""))
     })
@@ -141,7 +123,7 @@ class Home extends React.Component {
     if (foodDates.length >= 10) {age = "Adult"}
     if (currentDate - lastMeal <= 0) {mood = 2}
     else if (currentDate - lastMeal >= 2) {mood = 3}
-    return { "age": age, "mood": mood }
+    this.props.setPupStatus({ "age": age, "mood": mood })
   }
 
   render() {
@@ -150,15 +132,15 @@ class Home extends React.Component {
         <Title>GIGAPET</Title>
         {this.props.kids && this.props.kids[0] && (
           <DogeBox>
-            <Doge src={`img/Dog-${this.state.pupStatus.age}-${this.state.pupStatus.mood}.gif`} alt="" />
+            <Doge src={`img/Dog-${this.props.pupStatus.age}-${this.props.pupStatus.mood}.gif`} alt="" />
           </DogeBox>
         )}
         {this.props.kids && this.props.kids[0] && (
           <SelectBoxSC>
             <LabelSC>OWNER</LabelSC>
             <SelectSC onChange={this.childSelectHandler}>
-              {this.props.kids && this.props.kids.map(el => {
-                return <OptionSC value={el.id}>{el.name}</OptionSC>;
+              {this.props.kids && this.props.kids.map((el, index) => {
+                return <OptionSC value={index}>{el.name}</OptionSC>;
               })}
             </SelectSC>
           </SelectBoxSC>
@@ -183,11 +165,12 @@ const mapStateToProps = state => ({
   kids: state.kids,
   currentChild: state.currentChild,
   hasChildren: state.hasChildren,
+  pupStatus: state.pupStatus,
   foodEntries: state.foodEntries,
   pending: state.pending
 });
 
 export default connect(
   mapStateToProps,
-  { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood}
+  { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood, setPupStatus}
 )(Home);

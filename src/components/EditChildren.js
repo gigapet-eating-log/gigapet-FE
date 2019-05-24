@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getChildren } from "../actions";
+import { getChildren, setCurrentChild } from "../actions";
 import Child from "./Child";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
@@ -43,61 +43,47 @@ const ArrowSC = styled.span`
 `
 
 class EditChildren extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      selectedChildNum: 0
+      selectedChildNum: this.props.kids.findIndex(el => el === this.props.currentChild)
     };
-  }
-
-  componentDidMount() {
-    const id = localStorage.getItem("currentUserId");
-    this.props.getChildren(id).then(() => {
-      if (this.props.kids) {
-        this.setState({
-          localChild: this.props.kids[this.state.localChildNum]
-        });
-      }
-    });
   }
 
   clickHandler = num => {
     if (!this.props.kids) {return}
-    let newNum = this.state.localChildNum + num;
+    let newNum = this.state.selectedChildNum + num;
     if (newNum < 0) {newNum = this.props.kids.length - 1};
     if (newNum > this.props.kids.length - 1) {newNum = 0};
-    console.log(newNum)
     this.setState({
-      localChildNum: newNum,
-      localChild: this.props.kids[newNum]
+      selectedChildNum: newNum,
     })
+    const newChild = this.props.kids[newNum]
+    this.props.setCurrentChild(newChild);
   }
 
   render() {
-    if (!this.state.localChild) {
-      return <div />;
-    } else
-      return (
-        <EditChildrenSC>
-          <TitleSC>Edit Children</TitleSC>
-          <ChildAndArrowsSC>
-            <ArrowSC onClick={() => this.clickHandler(-1)} className="fas fa-chevron-left" />
-            <Child data={this.state.localChild} />
-            <ArrowSC onClick={() => this.clickHandler(1)} className="fas fa-chevron-right" />
-          </ChildAndArrowsSC>
-        </EditChildrenSC>
-      );
+    return (
+      <EditChildrenSC>
+        <TitleSC>Edit Children</TitleSC>
+        <ChildAndArrowsSC>
+          <ArrowSC onClick={() => this.clickHandler(-1)} className="fas fa-chevron-left" />
+          {this.props.currentChild && <Child data={this.props.currentChild} />}
+          <ArrowSC onClick={() => this.clickHandler(1)} className="fas fa-chevron-right" />
+        </ChildAndArrowsSC>
+      </EditChildrenSC>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
     kids: state.kids,
-    currentChild: state.currentChild
+    currentChild: state.currentChild,
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getChildren }
+  { getChildren, setCurrentChild }
 )(EditChildren);

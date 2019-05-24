@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import AuthPage from './components/AuthPage';
 import LogIn from './components/LogIn';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
@@ -23,7 +22,6 @@ function App() {
     <div className="App">
       <Router>
         <TopBar />
-        <Route path='/auth' component={AuthPage} />
         <Route path='/login' component={LogIn} />
         <Route path='/signUp' component={SignUp} />
         <PrivateRoute exact path='/' component={Home} />
@@ -34,7 +32,11 @@ function App() {
         <PrivateRoute2 path="/history/specific" component={SortDateFormSpecific}/>
         <PrivateRoute2 path="/history/category" component={SortDateFormCategory}/>
         <PrivateRoute2 path="/history/advanced" component={SortFormAdvanced}/>
+        
+        {/* <PrivateRoute2 path="/edit-entry" component={EditEntry}/> */}
+
         <Route path="/edit-entry" render={props => (<EditEntry {...props} stateRouter={props.location.state} />)}/>
+
       </Router>
     </div>
   );
