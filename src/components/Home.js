@@ -139,6 +139,7 @@ class Home extends React.Component {
           <SelectBoxSC>
             <LabelSC>OWNER</LabelSC>
             <SelectSC onChange={this.childSelectHandler}>
+       
               {this.props.kids && this.props.kids.map((el, index) => {
                 return <OptionSC value={index}>{el.name}</OptionSC>;
               })}
