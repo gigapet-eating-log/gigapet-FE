@@ -54,11 +54,12 @@ const SpanSC = styled.span`
 const IconSC = styled.i`
   margin: 0;
   padding: 0;
-`
+`;
 
 const InputSC = styled.input`
-  width: 80px;
+  width: 140px;
   margin: 5px 0;
+  padding: 2px;
 `;
 
 const ButtonSC = styled.button`
@@ -78,7 +79,7 @@ const ButtonSC = styled.button`
   &:active {
     background: ${colors.purple};
     border-color: ${colors.purple};
-  }
+  };
 `;
 
 class LogIn extends Component {

@@ -37,29 +37,25 @@ const SelectBoxSC = styled.div`
   background: white;
   font-weight: bold;
   outline: ${colors.lavender};
-  border: 1px solid ${colors.darkestLavender};
-  border-radius: 8px;
   margin: 20px auto;
   padding: 0;
   user-select: none;
 `;
 
 const LabelSC = styled.label`
-  position: absolute;
-  padding-left: 14px;
   color: ${colors.darkestLavender};
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 5px;
 `;
 
 const SelectSC = styled.select`
   color: ${colors.darkestLavender};
   width: 100%;
   background: transparent;
-  border: none;
   font-size: 16px;
-  border-radius: 10px;
-  padding: 25px 10px 5px;
+  border-radius: 5px;
+  padding: 5px 10px 5px;
   z-index: 3;
   outline: none;
 `;

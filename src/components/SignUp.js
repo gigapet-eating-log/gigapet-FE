@@ -48,7 +48,7 @@ const SpanSC = styled.span`
   display: flex;
   align-items: center;
   width: 100px;
-  margin-right: 10px;
+  margin-right: 5px;
 `;
 
 const IconSC = styled.i`
@@ -57,8 +57,9 @@ const IconSC = styled.i`
 `;
 
 const InputSC = styled.input`
-  width: 80px;
+  width: 140px;
   margin: 5px 0;
+  padding: 2px
 `;
 
 const ButtonSC = styled.button`
