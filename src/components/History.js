@@ -27,5 +27,4 @@ class History extends Component {
 //     currentChild: state.currentChild
 // });
 
-
 export default connect(null, {})(History);

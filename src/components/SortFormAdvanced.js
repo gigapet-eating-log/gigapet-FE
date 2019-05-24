@@ -19,9 +19,6 @@ class SortFormAdvanced extends Component {
                 dateEnd: "",
                 category: "x"
             },
-            categoryChoose: false,
-            dateOneChoose: false,
-            dateTwoChoose: false,
         }
     }
 
@@ -29,8 +26,7 @@ class SortFormAdvanced extends Component {
         const id = localStorage.getItem("currentUserId");
         this.props.getChildren(id);
 
-        this.props.getFood(this.props.currentChild.id);
-        this.props.getFood(this.props.currentChild.id);
+        // this.props.getFood(this.props.currentChild.id);
 
     }
 
@@ -40,8 +36,6 @@ class SortFormAdvanced extends Component {
         });
         this.props.setCurrentChild(selectedChild);
 
-        const childId = this.props.currentChild.id;
-        this.props.getFood(childId);
     };
 
 
@@ -94,7 +88,6 @@ class SortFormAdvanced extends Component {
         
         return (
             <div className='advanced-search'>
-
                 <FormSC onSubmit={this.submitHandler}>
                     <TitleSC>Search by Category and Date</TitleSC>
                     <InputBoxSC spellCheck="false">
@@ -143,21 +136,21 @@ class SortFormAdvanced extends Component {
                     </ButtonBoxSC>
                 </FormSC>
 
-                <div>Caloric Intake History of </div>
                 <div className='child-select-container' >
-                    <label>Superhero: </label>
+                    <label>Food History of Superhero: </label>
                     <select onChange={this.childSelectHandler}>
                         {this.props.kids &&
                             this.props.kids.map(el => {
                                 return <option value={el.id}>{el.name.toUpperCase()}</option>;
                             })}
                     </select>
+                    <button onClick={this.fetch}> View All </button>
                 </div>
 
-                <button onClick={this.fetch}> Fetch Food for Child </button>
                 <div className='card-container'>
                     {this.state.initialEntries && this.props.filteredEntries.map(entry => {
-                        return <FoodEntries key={entry.food} entry={entry} />
+                        console.log(entry);
+                        return <FoodEntries key={entry.id} currentChild={this.props.currentChild} entry={entry} />
                     })}
                 </div>
 

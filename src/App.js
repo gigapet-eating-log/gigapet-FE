@@ -31,6 +31,8 @@ function App() {
         <PrivateRoute path="/history/specific" component={SortDateFormSpecific}/>
         <PrivateRoute path="/history/category" component={SortDateFormCategory}/>
         <PrivateRoute path="/history/advanced" component={SortFormAdvanced}/>
+        <PrivateRoute path="/edit-entry" component={SortFormAdvanced}/>
+
       </Router>
     </div>
   );
