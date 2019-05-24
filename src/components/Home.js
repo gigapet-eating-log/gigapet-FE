@@ -98,10 +98,15 @@ class Home extends React.Component {
         this.props.getFood(this.props.kids[0].id)
       })
       .then(() => {
-        !this.props.currentChild && this.props.setCurrentChild(this.props.kids[0]);
         this.checkPupStatus();
       })
     this.props.getUser(id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.pending.get && !this.props.pending.get) {
+      this.checkPupStatus();
+    }
   }
 
   childSelectHandler = ev => {
@@ -111,7 +116,7 @@ class Home extends React.Component {
   };
 
   checkPupStatus = () => {
-    if (!this.props.foodEntries) {
+    if (!this.props.foodEntries || !this.props.foodEntries[0]) {
       return this.props.setPupStatus({ "age": "Puppy", "mood": "1" })}
     const foodDates = this.props.foodEntries.map(item => {
       return Number(item.date.replace(/-/g, ""))
