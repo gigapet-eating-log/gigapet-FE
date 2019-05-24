@@ -484,13 +484,11 @@ const rootReducer = (state = initialState, action) => {
         },
         error: action.payload
       };
-
     case FILTERED_TO_STATE:
       return {
         ...state,
         filteredEntries: action.payload
       }
-
     default:
       return state;
   }
