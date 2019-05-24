@@ -134,16 +134,21 @@ export const [ENTRY_GET_START, ENTRY_GET_SUCCESS, ENTRY_GET_FAIL] = [
 ];
 
 export const getFood = childId => dispatch => {
+  console.log(childId); // 5 or 9 right now
+  
   dispatch({ type: ENTRY_GET_START });
   axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/getfood/${childId}`)
     .then(res => {
+      console.log("fetching food", res)
       dispatch({ type: ENTRY_GET_SUCCESS, payload: res.data });
     })
     .catch(err => {
       dispatch({ type: ENTRY_GET_FAIL, payload: err });
     });
 };
+
+///////////////////////////////////////////////////////////////////////////////////
 
 export const [ENTRY_POST_START, ENTRY_POST_SUCCESS, ENTRY_POST_FAIL] = [
   "ENTRY_POST_START",
@@ -170,10 +175,11 @@ export const [ENTRY_PUT_START, ENTRY_PUT_SUCCESS, ENTRY_PUT_FAIL] = [
   "ENTRY_PUT_FAIL"
 ];
 
-export const putFood = (entry, id) => dispatch => {
+export const putFood = editedEntry => dispatch => {
   dispatch({ type: ENTRY_PUT_START });
-  axios
-    .put(`https://giga-back-end.herokuapp.com/api/users/register/${id}`, entry)
+  console.log("entry before put", editedEntry);
+  axiosWithAuth()
+    .put('https://giga-back-end.herokuapp.com/api/app/updatefood', editedEntry)
     .then(res => {
       console.log("PUT SUCCESS: ", res);
       dispatch({ type: ENTRY_PUT_SUCCESS, payload: res.data });
@@ -191,8 +197,10 @@ export const [ENTRY_DELETE_START, ENTRY_DELETE_SUCCESS, ENTRY_DELETE_FAIL] = [
 
 export const deleteFood = id => dispatch => {
   dispatch({ type: ENTRY_DELETE_START });
-  axios
-    .delete(`https://giga-back-end.herokuapp.com/api/users/register${id}`)
+  console.log("DELETE started:", id);
+
+   axiosWithAuth()
+    .delete('https://giga-back-end.herokuapp.com/api/app/deletefood', id)
     .then(res => {
       dispatch({ type: ENTRY_DELETE_SUCCESS, payload: res.data });
     })
@@ -295,5 +303,12 @@ export const setCurrentChild = selectedChild => {
   return {
     type: SET_CURRENT_CHILD,
     payload: selectedChild
-  };
-};
+
+export const FILTERED_TO_STATE = "FILTERED_TO_STATE";
+
+export const filteredToState = array => {
+  return {
+    type: FILTERED_TO_STATE,
+    payload: array
+  }
+}

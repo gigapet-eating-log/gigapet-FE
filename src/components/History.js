@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-
+// Testing Account
+// Nguyen22 P: password22
 class History extends Component {
-    constructor() {
-        super();
-        this.state = {
-            
-        }
-    }
-    
+
     render() {
         return (
             <div className='history'>
-                <h3>Caloric Intake History of "Insert Current Child Here"</h3>
                 <nav className='nav'>
-                    <NavLink to='/history/day'>Find by Day</NavLink>
-                    <NavLink to='/history/specific'>Find by Range</NavLink>
+                    <NavLink to='/history/advanced'>Advanced Search</NavLink>
+                    {/* <NavLink to='/history/day'>Find by Day</NavLink>
+                    <NavLink to='/history/specific'>Find by Range</NavLink> */}
+                    {/* <NavLink to='/history/category'>Find by Category</NavLink> */}
                 </nav>
 
             </div>
@@ -25,9 +21,10 @@ class History extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    foodEntries: state.foodEntries,
-  });
+// const mapStateToProps = state => ({
+//     foodEntries: state.foodEntries,
+//     kids: state.kids,
+//     currentChild: state.currentChild
+// });
 
-
-export default connect(mapStateToProps, {})(History);
+export default connect(null, {})(History);
