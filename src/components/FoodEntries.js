@@ -10,6 +10,8 @@ class FoodEntries extends Component {
     }
 
     render() {
+        console.log(this.props.entry.id)
+
         return (
 
             <div className="entry-card" id={this.props.key}>
@@ -36,7 +38,7 @@ class FoodEntries extends Component {
                             parentId: localStorage.getItem('currentUserId'),
                             calories: 100,
                             date: this.props.entry.date,
-                            id: this.props.entry.key
+                            id: `${this.props.entry.id}`
                         }
                     }}><i class="fas fa-edit"></i></Link>
 

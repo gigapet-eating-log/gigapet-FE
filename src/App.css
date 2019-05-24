@@ -49,6 +49,13 @@
     margin:1%;
   }
 
+  .previous-form {
+    width: 30%;
+    height: auto;
+    border: 1px solid black;
+    margin:1% auto;
+  }
+
   .history nav a {
     border: 1px solid black;
     margin: 1%;

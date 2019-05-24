@@ -118,10 +118,11 @@ export const [ENTRY_PUT_START, ENTRY_PUT_SUCCESS, ENTRY_PUT_FAIL] = [
   "ENTRY_PUT_FAIL"
 ];
 
-export const putFood = (entry, id) => dispatch => {
+export const putFood = editedEntry => dispatch => {
   dispatch({ type: ENTRY_PUT_START });
-  axios
-    .put(`https://giga-back-end.herokuapp.com/api/users/register/${id}`, entry)
+  console.log("entry before put", editedEntry);
+  axiosWithAuth()
+    .put('https://giga-back-end.herokuapp.com/api/app/updatefood', editedEntry)
     .then(res => {
       console.log("PUT SUCCESS: ", res);
       dispatch({ type: ENTRY_PUT_SUCCESS, payload: res.data });

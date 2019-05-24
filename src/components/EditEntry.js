@@ -1,7 +1,10 @@
 import React from "react";
+import { connect } from 'react-redux';
 import styled from "styled-components";
 import { colors, fonts } from "../sharedStyles";
 import moment from "moment";
+import { putFood } from "../actions";
+
 
 export const FormSC = styled.div`
   display: flex;
@@ -96,7 +99,6 @@ class EditEntry extends React.Component {
     super(props);
     this.state = {
       input: {
-        childId: "x",
         food: "",
         calories: "",
         date: "",
@@ -137,9 +139,29 @@ class EditEntry extends React.Component {
       return;
     }
 
+    // food: "",
+    // calories: "",
+    // date: "",
+    // category: "x"
+
+    const editedEntry = {
+        name: this.props.location.state.name.name,
+	    mealTime: this.props.location.state.mealTime,
+	    foodType: this.state.input.category,
+	    foodName: this.state.input.food,
+	    parentId: this.props.location.state.parentId,
+	    calories: this.state.input.calories,
+	    date: this.state.input.date,
+	    id: this.props.location.state.id
+    }
+
+    console.log("Edited:", editedEntry)
+
+    this.props.putFood(editedEntry);
+
+
     this.setState({
       input: {
-        childId: "x",
         food: "",
         date: moment().format("YYYY-MM-DD"),
         category: "x",
@@ -153,7 +175,17 @@ class EditEntry extends React.Component {
     return (
         <React.Fragment>
         <div className='previous-form'>
-            
+                <p style={{textDecoration: 'underline'}}>Previous Entry</p>
+                {this.props.location.state.foodType === 'vegetables' && <i class="fas fa-carrot fa-2x"></i>}
+                {this.props.location.state.foodType === 'fruits' && <i class="fas fa-apple-alt fa-2x"></i>}
+                {this.props.location.state.foodType === 'grains' && <i class="fas fa-bread-slice fa-2x"></i>}
+                {this.props.location.state.foodType === 'dairy' && <i class="fas fa-cheese fa-2x"></i>}
+                {this.props.location.state.foodType === 'proteins' && <i class="fas fa-bacon fa-2x"></i>}
+                {this.props.location.state.foodType === 'junk' && <i class="fas fa-cookie fa-2x"></i>}
+
+                <p><strong>Food Item</strong>: {this.props.location.state.foodName}</p>
+                <p><strong>Food Type</strong>: {this.props.location.state.foodType}</p>
+                <p><strong>Date</strong>: {this.props.location.state.date}</p>
         </div>
       <FormSC onSubmit={this.submitHandler}>
         <TitleSC>Edit Entry</TitleSC>
@@ -210,4 +242,8 @@ class EditEntry extends React.Component {
   }
 }
 
-export default EditEntry;
+
+export default connect(
+    null,
+    { putFood }
+)(EditEntry);

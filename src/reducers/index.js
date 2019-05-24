@@ -232,6 +232,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         foodEntries: action.payload,
+        filteredEntries: action.payload,
         pending: {
           ...state.pending,
           put: false
