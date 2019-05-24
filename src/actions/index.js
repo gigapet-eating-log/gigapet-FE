@@ -19,12 +19,9 @@ export const signUp = credentials => dispatch => {
     .then(() => {
       dispatch({ type: LOGIN_START });
       return axios
-        .post(
-          "https://giga-back-end.herokuapp.com/api/users/login",
-          loginInput
-        )
+        .post("https://giga-back-end.herokuapp.com/api/users/login", loginInput)
         .then(res => {
-          console.log(res)
+          console.log(res);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("currentUserId", res.data.id);
           dispatch({ type: LOGIN_SUCCESS, payload: res.data });
@@ -64,7 +61,68 @@ export const login = credentials => dispatch => {
 export const LOGOUT = "LOGOUT";
 
 export const logout = () => {
-  return {type: LOGOUT}
+  localStorage.clear();
+  return {
+    type: LOGOUT
+  }
+};
+
+export const [USER_GET_START, USER_GET_SUCCESS, USER_GET_FAIL] = [
+  "USER_GET_START",
+  "USER_GET_SUCCESS",
+  "USER_GET_FAIL"
+];
+
+export const getUser = id => dispatch => {
+  dispatch({ type: USER_GET_START });
+  axiosWithAuth()
+    .get(`https://giga-back-end.herokuapp.com/api/users/${id}`)
+    .then(res => {
+      dispatch({ type: USER_GET_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: USER_GET_FAIL, payload: err });
+    });
+};
+
+export const [USER_PUT_START, USER_PUT_SUCCESS, USER_PUT_FAIL] = [
+  "USER_PUT_START",
+  "USER_PUT_SUCCESS",
+  "USER_PUT_FAIL"
+];
+
+export const putUser = (input, id) => dispatch => {
+  dispatch({ type: USER_PUT_START });
+  axiosWithAuth()
+    .put(`https://giga-back-end.herokuapp.com/api/users/${id}`, input)
+    .then(res => {
+      dispatch({ type: USER_PUT_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: USER_PUT_FAIL, payload: err });
+    });
+};
+
+export const [USER_DELETE_START, USER_DELETE_SUCCESS, USER_DELETE_FAIL] = [
+  "USER_DELETE_START",
+  "USER_DELETE_SUCCESS",
+  "USER_DELETE_FAIL"
+];
+
+export const deleteUser = id => dispatch => {
+  dispatch({ type: USER_DELETE_START });
+  axiosWithAuth()
+    .delete(`https://giga-back-end.herokuapp.com/api/users/${id}`)
+    .then(res => {
+      dispatch({ type: USER_DELETE_SUCCESS, payload: res.data });
+    })
+    .then(() => {
+      window.location.reload();
+      logout();
+    })
+    .catch(err => {
+      dispatch({ type: USER_DELETE_FAIL, payload: err });
+    });
 };
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +148,6 @@ export const getFood = childId => dispatch => {
     });
 };
 
-
 ///////////////////////////////////////////////////////////////////////////////////
 
 export const [ENTRY_POST_START, ENTRY_POST_SUCCESS, ENTRY_POST_FAIL] = [
@@ -104,7 +161,7 @@ export const postFood = newEntry => dispatch => {
   axiosWithAuth()
     .post("https://giga-back-end.herokuapp.com/api/app/addfood", newEntry)
     .then(res => {
-      console.log("result:", res)
+      console.log("result:", res);
       dispatch({ type: ENTRY_POST_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -152,6 +209,14 @@ export const deleteFood = id => dispatch => {
     });
 };
 
+export const HAS_CHILDREN_INIT = "HAS_CHILDREN_INIT"
+
+export const hasChildrenInit = () => {
+  return {
+    type: HAS_CHILDREN_INIT
+  }
+}
+
 export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
   "CHILDREN_GET_START",
   "CHILDREN_GET_SUCCESS",
@@ -159,12 +224,11 @@ export const [CHILDREN_GET_START, CHILDREN_GET_SUCCESS, CHILDREN_GET_FAIL] = [
 ];
 
 export const getChildren = id => dispatch => {
-  // console.log(id)
   dispatch({ type: CHILDREN_GET_START });
   return axiosWithAuth()
     .get(`https://giga-back-end.herokuapp.com/api/app/childname/${id}`)
     .then(res => {
-      console.log("GETRES:", res);
+      console.log("result:", res);
       dispatch({ type: CHILDREN_GET_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -172,23 +236,21 @@ export const getChildren = id => dispatch => {
     });
 };
 
-export const [CHILDREN_POST_START, CHILDREN_POST_SUCCESS, CHILDREN_POST_FAIL] = [
-  "CHILDREN_POST_START",
-  "CHILDREN_POST_SUCCESS",
-  "CHILDREN_POST_FAIL"
-];
+export const [
+  CHILDREN_POST_START,
+  CHILDREN_POST_SUCCESS,
+  CHILDREN_POST_FAIL
+] = ["CHILDREN_POST_START", "CHILDREN_POST_SUCCESS", "CHILDREN_POST_FAIL"];
 
 export const postChildren = newChild => dispatch => {
   dispatch({ type: CHILDREN_POST_START });
-  axiosWithAuth()
+  return axiosWithAuth()
     .post("https://giga-back-end.herokuapp.com/api/app/addchild", newChild)
     .then(res => {
-      console.log("result:", res)
+      console.log("result:", res);
       dispatch({ type: CHILDREN_POST_SUCCESS });
     })
-    .then(() => {
-
-    })
+    .then(() => {})
     .catch(err => {
       dispatch({ type: CHILDREN_POST_FAIL, payload: err });
     });
@@ -213,7 +275,11 @@ export const putChildren = (entry, id) => dispatch => {
     });
 };
 
-export const [CHILDREN_DELETE_START, CHILDREN_DELETE_SUCCESS, CHILDREN_DELETE_FAIL] = [
+export const [
+  CHILDREN_DELETE_START,
+  CHILDREN_DELETE_SUCCESS,
+  CHILDREN_DELETE_FAIL
+] = [
   "CHILDREN_DELETE_START",
   "CHILDREN_DELETE_SUCCESS",
   "CHILDREN_DELETE_FAIL"
@@ -233,12 +299,10 @@ export const deleteChildren = id => dispatch => {
 
 export const SET_CURRENT_CHILD = "SET_CURRENT_CHILD";
 
-export const setCurrentChild = (selectedChild) => {
+export const setCurrentChild = selectedChild => {
   return {
     type: SET_CURRENT_CHILD,
     payload: selectedChild
-  }
-}
 
 export const FILTERED_TO_STATE = "FILTERED_TO_STATE";
 

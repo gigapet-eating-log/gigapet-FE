@@ -1,19 +1,44 @@
 import React from "react";
 import { connect } from "react-redux";
-import { putChildren, deleteChildren } from "../actions";
+import { getUser, putUser, deleteUser } from "../actions";
 import styled from "styled-components";
 import { fonts, colors } from "../sharedStyles";
 
-const ChildBoxSC = styled.div`
+const EditAccountSC = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  border: 3px solid ${colors.purple};
+  align-items: center;
+  background: ${colors.lavender};
+  max-width: 500px;
+  margin: 30px auto 0;
+  border: 1px outset rgb(200, 200, 200);
   border-radius: 10px;
+  overflow: hidden;
+`
+
+const DetailBoxSC = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   width: 180px;
-  margin: 10px;
+  height: 110px;
+  margin: 0px auto;
   padding: 10px;
 `;
+
+const TitleSC = styled.h2`
+  font-family: ${fonts.title};
+  font-weight: bold;
+  font-size: 26px;
+  letter-spacing: 0.05rem;
+  background: ${colors.lightPurple};
+  align-self: stretch;
+  color: white;
+  margin: 0;
+  padding: 10px;
+`
+
 const H3SC = styled.h3`
   margin: 0;
   padding: 0;
@@ -24,13 +49,19 @@ const PSC = styled.p`
   padding: 0;
 `;
 
+const InputLineSC = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const SpanSC = styled.span`
-  width: 100px;
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  width: 90px;
 `;
 
 const InputSC = styled.input`
-  width: 50px;
+  width: 90px;
   margin: 5px 0;
 `;
 
@@ -60,22 +91,40 @@ class EditAccount extends React.Component {
       editActive: false,
       editInput: {
         name: "",
-        calorieGoal: ""
+        email: ""
       }
     };
   }
+
+  componentDidMount(){
+    if (this.props.currentUser) {return};
+    const id = localStorage.getItem("currentUserId");
+    this.props.getUser(id);
+  }
+
   editHandler = ev => {
     ev.preventDefault();
-    this.props.putChildren(this.state.editInput, this.props.data.id);
-    this.setState({
-      editActive: false,
-      editInput: {
-        name: "",
-        calorieGoal: ""
-      }
-    });
+    if (!this.state.editActive) {
+      this.setState({
+        editActive: true,
+        editInput: {
+          name: this.props.currentUser.name,
+          email: this.props.currentUser.email
+        }
+      });
+    } else {
+      console.log(this.state.editInput)
+      const id = localStorage.getItem("currentUserId");
+      this.props.putUser(this.state.editInput, id);
+      this.setState({
+        editActive: false,
+        editInput: {
+          name: "",
+          email: ""
+        }
+      });
+    }
   };
-
   changeHandler = ev => {
     this.setState({
       editInput: { ...this.state.editInput, [ev.target.name]: ev.target.value }
@@ -84,42 +133,61 @@ class EditAccount extends React.Component {
 
   deleteHandler = ev => {
     ev.preventDefault();
-    this.props.deleteChildren(this.props.data.id);
+    this.props.deleteUser(this.props.currentUser.id);
   };
 
   render() {
     return (
-      <div>
-        <h2>Edit Account Details</h2>
-        <form onSubmit={this.editHandler}>
+      <EditAccountSC>
+        <TitleSC>Edit Account Details</TitleSC>
+        <DetailBoxSC>
+          {!this.state.editActive ? (
+            <div>
+              <H3SC>{this.props.currentUser && this.props.currentUser.name}</H3SC>
+              <PSC>{this.props.currentUser && this.props.currentUser.email}</PSC>
+            </div>
+          ) : (
+            <form>
+              <InputLineSC>
+                <SpanSC>Username:</SpanSC>
+                <InputSC
+                  type="text"
+                  name="name"
+                  value={this.state.editInput.name}
+                  onChange={this.changeHandler}
+                />
+              </InputLineSC>
+              <InputLineSC>
+                <SpanSC>Email:</SpanSC>
+                <InputSC
+                  type="text"
+                  name="email"
+                  value={this.state.editInput.email}
+                  onChange={this.changeHandler}
+                />
+              </InputLineSC>
+            </form>
+          )}
           <div>
-            <SpanSC>Name:</SpanSC>
-            <InputSC
-              type="text"
-              name="name"
-              placeholder="Child Name"
-              value={this.state.editInput.name}
-              onChange={this.changeHandler}
-            />
+            <ButtonSC onClick={this.editHandler}>
+              {this.state.editActive ? "Submit" : "Edit"}
+            </ButtonSC>
+            <ButtonSC onClick={this.deleteHandler}>Delete</ButtonSC>
           </div>
-          <div>
-            <SpanSC>Calorie Goal:</SpanSC>
-            <InputSC
-              type="text"
-              name="calorieGoal"
-              placeholder="Calorie Goal"
-              value={this.state.editInput.calorieGoal}
-              onChange={this.changeHandler}
-            />
-          </div>
-          <ButtonSC type="submit">delete</ButtonSC>
-        </form>
-      </div>
+        </DetailBoxSC>
+      </EditAccountSC>
     );
   }
 }
 
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  };
+};
+
 export default connect(
-  null,
-  { putChildren, deleteChildren }
+  mapStateToProps,
+  { getUser, putUser, deleteUser }
 )(EditAccount);

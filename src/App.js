@@ -10,6 +10,7 @@ import AddEntry from './components/AddEntry';
 import ManageAccount from './components/ManageAccount';
 import History from './components/History';
 import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute2 from './components/PrivateRoute2';
 import SortDateForm from './components/SortDateForm';
 import SortDateFormSpecific from './components/SortDateFormSpecific';
 import SortDateFormCategory from './components/SortDateFormCategory';
@@ -26,18 +27,14 @@ function App() {
         <Route path='/login' component={LogIn} />
         <Route path='/signUp' component={SignUp} />
         <PrivateRoute exact path='/' component={Home} />
-        <PrivateRoute path="/add-entry" component={AddEntry}/>
-        <PrivateRoute path="/manage-account" component={ManageAccount}/>
-        <PrivateRoute path="/history" component={History}/>
-        <PrivateRoute path="/history/day" component={SortDateForm}/>
-        <PrivateRoute path="/history/specific" component={SortDateFormSpecific}/>
-        <PrivateRoute path="/history/category" component={SortDateFormCategory}/>
-        <PrivateRoute path="/history/advanced" component={SortFormAdvanced}/>
-        
-        {/* <PrivateRoute path="/edit-entry" component={EditEntry}/> */}
-
+        <PrivateRoute2 path="/add-entry" component={AddEntry}/>
+        <PrivateRoute2 path="/manage-account" component={ManageAccount}/>
+        <PrivateRoute2 path="/history" component={History}/>
+        <PrivateRoute2 path="/history/day" component={SortDateForm}/>
+        <PrivateRoute2 path="/history/specific" component={SortDateFormSpecific}/>
+        <PrivateRoute2 path="/history/category" component={SortDateFormCategory}/>
+        <PrivateRoute2 path="/history/advanced" component={SortFormAdvanced}/>
         <Route path="/edit-entry" render={props => (<EditEntry {...props} stateRouter={props.location.state} />)}/>
-
       </Router>
     </div>
   );

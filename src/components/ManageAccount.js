@@ -9,13 +9,20 @@ const ManageAccountSC = styled.div`
   flex-direction: column;
 `
 
+const ManageChildrenSC = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+`
+
 const ManageAccount = () => {
   return (
     <ManageAccountSC>
-      <EditChildren />
-      <AddChild />
+      <ManageChildrenSC>
+        <AddChild />
+        <EditChildren />
+      </ManageChildrenSC>
       <EditAccount />
-
     </ManageAccountSC>
   );
 };

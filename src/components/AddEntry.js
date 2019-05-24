@@ -9,11 +9,11 @@ export const FormSC = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: white;
+  background: ${colors.lavender};
   max-width: 500px;
   margin: 0 auto;
   border: 1px outset rgb(200, 200, 200);
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
 `;
 
