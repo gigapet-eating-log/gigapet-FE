@@ -3,6 +3,7 @@ import { FormSC, TitleSC, InputBoxSC, SelectSC, OptionSC, InputSC, ButtonBoxSC, 
 import { connect } from 'react-redux';
 import FoodEntries from './FoodEntries';
 import { getChildren, setCurrentChild, getFood, filteredToState } from "../actions";
+import {Link} from 'react-router-dom';
 
 
 
@@ -152,6 +153,8 @@ class SortFormAdvanced extends Component {
                         return <FoodEntries key={entry.id} currentChild={this.props.currentChild} entry={entry} />
                     })}
                 </div>
+
+               <Link to='/secret'> <div></div></Link>
 
             </div>
 

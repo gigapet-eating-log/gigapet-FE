@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { colors, fonts } from "../sharedStyles";
 import moment from "moment";
 import { putFood } from "../actions";
-
+import {Link} from 'react-router-dom';
 
 export const FormSC = styled.div`
   display: flex;
@@ -145,7 +145,7 @@ class EditEntry extends React.Component {
     // category: "x"
 
     const editedEntry = {
-        name: this.props.location.state.name.name,
+      name: this.props.location.state.name.name,
 	    mealTime: this.props.location.state.mealTime,
 	    foodType: this.state.input.category,
 	    foodName: this.state.input.food,
@@ -167,7 +167,9 @@ class EditEntry extends React.Component {
         category: "x",
         calories: ""
       }
-    });
+    })
+
+    this.props.history.push("/history")
   };
 
   render() {
@@ -186,6 +188,8 @@ class EditEntry extends React.Component {
                 <p><strong>Food Item</strong>: {this.props.location.state.foodName}</p>
                 <p><strong>Food Type</strong>: {this.props.location.state.foodType}</p>
                 <p><strong>Date</strong>: {this.props.location.state.date}</p>
+
+                <Link to='/history'>Back to History</Link>
         </div>
       <FormSC onSubmit={this.submitHandler}>
         <TitleSC>Edit Entry</TitleSC>
