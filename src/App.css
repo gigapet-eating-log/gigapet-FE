@@ -10,7 +10,7 @@
   a, i {
     text-decoration: none;
     padding:1%;
-    margin:5%;
+    cursor:pointer,
   }
 
   .options i,a {
@@ -76,6 +76,7 @@
 
   .lair img {
     height:350px;
+    pointer-events: none;
   }
 
   .interact-form {
@@ -85,8 +86,10 @@
     justify-content: center;
   }
     
-  .interact-form input, select, button {
-    font-family: 'MedievalSharp', cursive;  }
+  .interact-form button, i {
+    font-family: 'MedievalSharp', cursive;
+    cursor: pointer;
+    }
 
   
   
