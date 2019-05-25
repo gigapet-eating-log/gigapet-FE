@@ -6,14 +6,14 @@ import { getChildren, getUser, setCurrentChild, hasChildrenInit, getFood, setPup
 import { colors } from "../sharedStyles";
 import AddChild from "./AddChild";
 
-const Title = styled.h1`
+export const Title = styled.h1`
   font-family: "Press Start 2P", cursive;
   color: ${colors.darkestLavender};
   font-size: 40px;
   margin-top: 60px;
 `;
 
-const DogeBox = styled.div`
+export const DogeBox = styled.div`
   max-width: 350px;
   max-height: 350px;
   margin: 35px auto 35px;
@@ -23,7 +23,7 @@ const DogeBox = styled.div`
   user-select: none;
 `;
 
-const Doge = styled.img`
+export const Doge = styled.img`
   width: 100%;
   margin-left: 10px;
 `;

@@ -15,6 +15,7 @@ import SortDateFormSpecific from './components/SortDateFormSpecific';
 import SortDateFormCategory from './components/SortDateFormCategory';
 import SortFormAdvanced from './components/SortFormAdvanced';
 import EditEntry from './components/EditEntry';
+import DragonLair from './components/DragonLair';
 
 
 function App() {
@@ -38,6 +39,8 @@ function App() {
         {/* <PrivateRoute2 path="/edit-entry" component={EditEntry}/> */}
 
         <Route path="/edit-entry" render={props => (<EditEntry {...props} stateRouter={props.location.state} />)}/>
+        <PrivateRoute path="/secret" component={DragonLair}/>
+
 
       </Router>
     </div>

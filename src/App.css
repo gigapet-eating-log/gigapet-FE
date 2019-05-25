@@ -74,6 +74,20 @@
     margin-top:30px;
   }
 
+  .lair img {
+    height:350px;
+  }
+
+  .interact-form {
+    display:flex;
+    padding:1%;
+    margin: 2% 0;
+    justify-content: center;
+  }
+    
+  .interact-form input, select, button {
+    font-family: 'MedievalSharp', cursive;  }
+
   
   
   
