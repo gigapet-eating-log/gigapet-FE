@@ -62,9 +62,8 @@ class DragonLair extends Component {
         this.state.counter > 2 && this.state.baby && this.state.babySatisfied && this.setState({ ...this.state, message: "That was delicious, can I have more?", counter: this.state.counter + 1 }) // Baby Satisfied
         this.state.counter > 30 && this.state.babySatisfied && this.setState({ ...this.state, message: 'Amazing, the dragon have grown quite a bit!', counter: this.state.counter + 1, egg: false, eggCrack: false, baby: false, adult: true, retirement: false }) // Dragon
         this.state.counter > 30 && this.state.adult && this.setState({ ...this.state, message: 'I need to grow bigger and stronger! What should I do? What should I eat?', counter: this.state.counter + 1})
-        this.state.counter > 30 && this.state.adultSatisfied && this.setState({ ...this.state, message: "Your Dragon is satisfied and will follow your command. The world is as good as yours, but that is your choice. Choose...", counter: this.state.counter + 1, baby: false, adult: true }) // Dragon Satisfied
-        // this.state.counter > 100 && this.state.adultSatisfied && this.setState({ ...this.state, message: "You've conquered the world. Your dragon says his goodbyes and departs this world. You reminisce on his long life.", counter: this.state.counter + 1, baby: false, adult: false, retirement: true }) // Dragon
-        // console.log(this.state.counter, this.state);
+        this.state.counter > 30 && this.state.adultSatisfied && this.setState({ ...this.state, message: "Your Dragon is satisfied and will follow your command. The world is as good as yours, but that is your choice? Choose. Peace or War?", counter: this.state.counter + 1, baby: false, adult: true }) // Dragon Satisfied
+        
 
         if (this.state.anything.toLowerCase().includes("love")) {this.setState({...this.state, eggSatisfied: true, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: true, baby: false, adult: false, retirement: false, message: "Wow, what did you do?"})}
         if (this.state.anything.toLowerCase().includes("dracarys")) {this.setState({...this.state, eggCrackSatisfied: true, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: true, adult: false, retirement: false, message: "Wow, the egg has hatched! A miracle of the century."})}
@@ -75,6 +74,12 @@ class DragonLair extends Component {
         if (this.state.category.includes("proteins")) {this.state.baby && this.setState({...this.state, counter: this.state.counter + 2, category: "x", message: "I can feel the energy from this. Chewy..."})}
         if (this.state.category.includes("junk")) {this.setState({...this.state, babySatisfied: false, counter: this.state.counter - 5, category: "x", message: "That was disgusting..."})}
         this.state.category.includes("proteins") && this.state.anything.toLowerCase().includes('lift') && this.state.adult && this.setState({...this.state, adultSatisfied: true, counter: this.state.counter + 1, category: "x", anything: "", message: "You're right, a dragon is nothing without its strength!"})
+
+        // From this point, the Dragon has three choices it could go: Peace, War, or Neither/None where he retires and hands you an un-lockable egg that you can grow into your very own avatar on your home-screen. Peace also grants the egg avatar. 
+        this.state.anything.toLowerCase().includes("war") && this.state.adultSatisfied && this.state.adult && this.setState({...this.state, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: false, adult: false, retirement: false, adultPeace: false, adultWar: true, message: "With great power comes with great responsibilities. Think it over next time..."})
+        this.state.anything.toLowerCase().includes("peace") && this.state.adultSatisfied && this.state.adult && this.setState({...this.state, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: false, adult: false, retirement: false, adultPeace: true, adultWar: false, message: "Coexistence is hard but necessary. Looks like your dragon has left something behind for you. Take good care of it!"})
+        this.state.anything.toLowerCase().includes("neither") && this.state.adultSatisfied && this.state.adult && this.setState({...this.state, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: false, adult: false, retirement: true, adultPeace: false, adultWar: false, message: "Sometimes it really is best to do nothing... Looks like your dragon has left something behind for you. Take good care of it!"})
+
 
         console.log(this.state);
  
@@ -98,7 +103,9 @@ class DragonLair extends Component {
                     {this.state.eggCrack === true && <img src={require('../assets/Egg_Crack.gif')} alt="loading..." />}
                     {this.state.baby === true && <img src={require('../assets/Baby.gif')} alt="loading..." />}
                     {this.state.adult === true && <img src={require('../assets/Adult.gif')} alt="loading..." />}
-                    {this.state.retirement === true && <img src={require('../assets/Egg_To_Adult.gif')} alt="loading..." />}
+                    {this.state.adultPeace === true && <img src={require('../assets/Adult_Peace.gif')} alt="loading..." />}
+                    {this.state.adultWar === true && <img src={require('../assets/Adult_War.gif')} alt="loading..." />}
+                    {this.state.retirement === true && <img src={require('../assets/Adult_Retire.gif')} alt="loading..." />}
                 </div>
 
                 {/* <div className='state'>
