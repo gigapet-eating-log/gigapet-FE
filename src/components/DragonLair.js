@@ -109,7 +109,7 @@ class DragonLair extends Component {
 
                 <GameFont>{this.state.message}</GameFont>
 
-                { !this.state.endGame && <form onSubmit={this.interact}>
+                { !this.state.endGame && <form onSubmit={this.interact} autocomplete="off">
                         <div className='interact-form-lair' spellCheck="false">
                             <input
                                 type="text"

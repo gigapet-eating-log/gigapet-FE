@@ -87,7 +87,8 @@ const initialState = {
   },
   signUpSuccessMessage: "",
   error: false,
-  errorMessage: ""
+  errorMessage: "",
+  progress: 0
 };
 
 const rootReducer = (state = initialState, action) => {

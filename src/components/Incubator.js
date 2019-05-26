@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {GameFont} from '../components/DragonLair';
-import {Title} from '../components/Home';
+import { GameFont } from '../components/DragonLair';
+import { Title } from '../components/Home';
 
 
 
@@ -23,7 +23,6 @@ class Incubator extends Component {
                     {this.props.dragonStatus.eggRegular && <img src={require('../assets/Egg_Regular.gif')} alt="loading..." />}
                     {this.props.dragonStatus.eggPeace && <img src={require('../assets/Egg_Peace.gif')} alt="loading..." />}
 
-
                     <GameFont>{this.state.message}</GameFont>
                 </div>
 
@@ -38,7 +37,8 @@ const mapStateToProps = state => ({
         available: state.dragonStatus.available,
         eggRegular: state.dragonStatus.eggRegular,
         eggPeace: state.dragonStatus.eggPeace
-    }
+    },
+    progress: state.progress
 });
 
 export default connect(mapStateToProps, {})(Incubator);

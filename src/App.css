@@ -86,7 +86,7 @@
 
   .pet-container img {
     height:350px;
-    cursor: pointer;
+    pointer-events: none;
   }
 
   /* .interact-form {
