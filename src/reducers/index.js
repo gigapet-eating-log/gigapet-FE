@@ -69,56 +69,7 @@ const initialState = {
     adultWar: false,
     adultRetire: false
   },
-  filteredEntries: [
-    // {
-    //   id: 5,
-    //   foodName: "Carrot",
-    //   date: "2019-01-02",
-    //   mealTime: "Lunch",
-    //   foodType: "vegetables",
-    //   calories: 150
-    // },
-    // {
-    //   id: 9,
-    //   foodName: "Carrot",
-    //   date: "2019-01-03",
-    //   mealTime: "Lunch",
-    //   foodType: "fruits",
-    //   calories: 200
-    // },
-    // {
-    //   id: 9,
-    //   foodName: "Carrot",
-    //   date: "2019-01-04",
-    //   mealTime: "Lunch",
-    //   foodType: "grains",
-    //   calories: 600
-    // },
-    // {
-    //   id: 9,
-    //   foodName: "Carrot",
-    //   date: "2019-02-05",
-    //   mealTime: "Lunch",
-    //   foodType: "dairy",
-    //   calories: 500
-    // },
-    // {
-    //   id: 9,
-    //   foodName: "Carrot",
-    //   date: "2019-02-06",
-    //   mealTime: "Lunch",
-    //   foodType: "proteins",
-    //   calories: 400
-    // },
-    // {
-    //   id: 9,
-    //   foodName: "Carrot",
-    //   date: "2019-02-01",
-    //   mealTime: "Lunch",
-    //   foodType: "junk",
-    //   calories: 300
-    // },
-  ],
+  filteredEntries: [],
   pending: {
     login: false,
     register: false,
