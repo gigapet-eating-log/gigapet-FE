@@ -48,12 +48,7 @@ class DragonLair extends Component {
         // Interact Default Counter Value
         this.setState({ ...this.state, counter: this.state.counter + 1 });
 
-        // Pity System
-        // this.state.counter > 15 && this.setState({ ...this.state, message: "Something's happening", counter: this.state.counter + 1, egg: false, eggCrack: true})
-        // this.state.counter > 25 && this.setState({ ...this.state, message: "Hatched!", counter: this.state.counter + 1, egg: false, eggCrack: false, baby: true})
-        // this.state.counter > 35 && this.setState({ ...this.state, message: "Adult!", counter: this.state.counter + 1, egg: false, eggCrack: false, baby: false, adult: true})
-        // this.state.counter > 45 && this.setState({ ...this.state, message: "Retirement! Let's reminisce!", counter: this.state.counter + 1, egg: false, eggCrack: false, baby: false, adult: false, retirement: true})
-
+        // Conditionals for transitioning between form changes
         this.state.counter > 2 && this.state.egg && this.setState({ ...this.state, message: "Something might be happening soon, but it seems to be craving something. Are you the mother?", counter: this.state.counter + 1 }) // Egg Form Basic Counter
         this.state.counter > 2 && this.state.eggSatisfied && this.setState({ ...this.state, message: "Hmm, something seems to be happening. Soon...", counter: this.state.counter + 1, egg: false, baby: false, adult: false, eggCrack: true }) // Transform to Egg Crack
         this.state.counter > 2 && this.state.eggCrack && this.setState({ ...this.state, message: "It's a little chilly here. Who invited the Night King?", counter: this.state.counter + 1 }) // Egg Crack
@@ -65,32 +60,23 @@ class DragonLair extends Component {
         this.state.counter > 30 && this.state.adultSatisfied && this.setState({ ...this.state, message: "Your Dragon is satisfied and will follow your command. The world is as good as yours, but that is your choice? Choose. Peace or War?", counter: this.state.counter + 1, baby: false, adult: true }) // Dragon Satisfied
         
 
-        if (this.state.anything.toLowerCase().includes("love")) {this.setState({...this.state, eggSatisfied: true, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: true, baby: false, adult: false, retirement: false, message: "Wow, what did you do?"})}
-        if (this.state.anything.toLowerCase().includes("dracarys")) {this.setState({...this.state, eggCrackSatisfied: true, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: true, adult: false, retirement: false, message: "Wow, the egg has hatched! A miracle of the century."})}
+        // Conditionals for input and select 
+        if (this.state.anything.toLowerCase().includes("love")) {this.state.egg && this.setState({...this.state, eggSatisfied: true, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: true, baby: false, adult: false, retirement: false, message: "Wow, what did you do?"})}
+        if (this.state.anything.toLowerCase().includes("dracarys")) {this.state.eggCrack && this.setState({...this.state, eggCrackSatisfied: true, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: true, adult: false, retirement: false, message: "Wow, the egg has hatched! A miracle of the century."})}
         if (this.state.category.includes("vegetables")) {this.state.baby && this.setState({...this.state, babySatisfied: true, counter: this.state.counter + 5, category: "x", message: "That was delicious, can I have more?"})}
         if (this.state.category.includes("grains")) {this.state.baby && this.setState({...this.state, counter: this.state.counter + 2, category: "x", message: "This piece of grain is pretty good! Do you have some, what was it... peanut butta?"})}
         if (this.state.category.includes("fruits")) {this.state.baby && this.setState({...this.state, counter: this.state.counter + 2, category: "x", message: "Yummy, very sweet! More please..."})}
         if (this.state.category.includes("dairy")) {this.state.baby && this.setState({...this.state, counter: this.state.counter + 2, category: "x", message: "This looks weird, where did this come from? ... you consume this?"})}
         if (this.state.category.includes("proteins")) {this.state.baby && this.setState({...this.state, counter: this.state.counter + 2, category: "x", message: "I can feel the energy from this. Chewy..."})}
-        if (this.state.category.includes("junk")) {this.setState({...this.state, babySatisfied: false, counter: this.state.counter - 5, category: "x", message: "That was disgusting..."})}
+        if (this.state.category.includes("junk")) {this.state.baby && this.setState({...this.state, babySatisfied: false, counter: this.state.counter - 5, category: "x", message: "That was disgusting..."})}
         this.state.category.includes("proteins") && this.state.anything.toLowerCase().includes('lift') && this.state.adult && this.setState({...this.state, adultSatisfied: true, counter: this.state.counter + 1, category: "x", anything: "", message: "You're right, a dragon is nothing without its strength!"})
 
         // From this point, the Dragon has three choices it could go: Peace, War, or Neither/None where he retires and hands you an un-lockable egg that you can grow into your very own avatar on your home-screen. Peace also grants the egg avatar. 
         this.state.anything.toLowerCase().includes("war") && this.state.adultSatisfied && this.state.adult && this.setState({...this.state, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: false, adult: false, retirement: false, adultPeace: false, adultWar: true, message: "With great power comes with great responsibilities. Think it over next time..."})
         this.state.anything.toLowerCase().includes("peace") && this.state.adultSatisfied && this.state.adult && this.setState({...this.state, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: false, adult: false, retirement: false, adultPeace: true, adultWar: false, message: "Coexistence is hard but necessary. Looks like your dragon has left something behind for you. Take good care of it!"})
         this.state.anything.toLowerCase().includes("neither") && this.state.adultSatisfied && this.state.adult && this.setState({...this.state, counter: this.state.counter + 1, anything: "", egg: false, eggCrack: false, baby: false, adult: false, retirement: true, adultPeace: false, adultWar: false, message: "Sometimes it really is best to do nothing... Looks like your dragon has left something behind for you. Take good care of it!"})
-
-
-        console.log(this.state);
  
     }
-
-
-    componentDidUpdate() {
-        console.log(this.state)
-    }
-
-
 
     render() {
         return (
@@ -107,10 +93,6 @@ class DragonLair extends Component {
                     {this.state.adultWar === true && <img src={require('../assets/Adult_War.gif')} alt="loading..." />}
                     {this.state.retirement === true && <img src={require('../assets/Adult_Retire.gif')} alt="loading..." />}
                 </div>
-
-                {/* <div className='state'>
-                    <p>Anything: {this.state.anything} Category: {this.state.category} Counter: {this.state.counter}</p>
-                </div> */}
 
                 <GameFont>{this.state.message}</GameFont>
 
@@ -141,8 +123,9 @@ class DragonLair extends Component {
                                 <option value="proteins">Proteins</option>
                                 <option value="junk">Junk</option>
                             </select>
+
                             <i class="fas fa-hand-paper fa-2x" onClick={this.interact}></i>
-                            {/* <button type="form">Interact</button> */}
+
                         </div>
                 </form>
             </div>
