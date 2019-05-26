@@ -321,3 +321,23 @@ export const filteredToState = array => {
     payload: array
   }
 }
+
+export const INCUBATOR_LAUNCH_REG = "INCUBATOR_LAUNCH_REG";
+
+export const launchIncubatorRegular = () => {
+  return {
+    type: INCUBATOR_LAUNCH_REG,
+  }
+}
+
+export const INCUBATOR_LAUNCH_PEACE = "INCUBATOR_LAUNCH_PEACE";
+
+export const launchIncubatorPeace = () => {
+  return {
+    type: INCUBATOR_LAUNCH_PEACE,
+  }
+}
+
+
+
+

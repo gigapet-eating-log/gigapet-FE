@@ -80,6 +80,15 @@
     pointer-events: none;
   }
 
+  .lair i {
+    cursor: pointer;
+  }
+
+  .pet-container img {
+    height:350px;
+    cursor: pointer;
+  }
+
   /* .interact-form {
     display:flex;
     padding:1%;

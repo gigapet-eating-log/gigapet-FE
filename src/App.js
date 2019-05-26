@@ -12,6 +12,7 @@ import PrivateRoute2 from './components/PrivateRoute2';
 import SortFormAdvanced from './components/SortFormAdvanced';
 import EditEntry from './components/EditEntry';
 import DragonLair from './components/DragonLair';
+import Incubator from './components/Incubator';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <PrivateRoute2 path="/history" component={SortFormAdvanced}/>
         <Route path="/edit-entry" render={props => (<EditEntry {...props} stateRouter={props.location.state} />)}/>
         <PrivateRoute path="/secret" component={DragonLair}/>
+        <PrivateRoute path="/incubator" component={Incubator}/>
 
       </Router>
     </div>

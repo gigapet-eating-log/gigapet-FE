@@ -26,7 +26,7 @@ const TopBarContainerSC = styled.div`
 const TopBarSC = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 1000px;
   justify-content: center;
   padding: 0 120px;
   margin: 10px auto 0;
@@ -108,6 +108,7 @@ class TopBar extends React.Component {
               </NavLinkSC>
               <NavLinkSC to="/add-entry">ADD FOOD</NavLinkSC>
               <NavLinkSC to="/history">FOOD HISTORY</NavLinkSC>
+              {this.props.dragonStatus.available && <NavLinkSC to="/incubator">Incubator</NavLinkSC>}
               <NavLinkSC to="/manage-account">MANAGE ACCOUNT</NavLinkSC>
               <FixedLinkSC onClick={this.props.logout}>LOGOUT</FixedLinkSC>
             </TopBarSC>
@@ -131,7 +132,10 @@ class TopBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  pending: state.pending
+  pending: state.pending,
+  dragonStatus: {
+    available: state.dragonStatus.available
+  }
 });
 
 export default connect(

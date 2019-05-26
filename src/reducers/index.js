@@ -42,7 +42,9 @@ import {
   CHILDREN_DELETE_FAIL,
   SET_CURRENT_CHILD,
   SET_PUP_STATUS,
-  FILTERED_TO_STATE
+  FILTERED_TO_STATE,
+  INCUBATOR_LAUNCH_REG,
+  INCUBATOR_LAUNCH_PEACE
 } from "../actions";
 
 const initialState = {
@@ -54,6 +56,18 @@ const initialState = {
   pupStatus: {
     age: "Puppy",
     mood: "1"
+  },
+  // Dragon Status for when egg is available 
+  dragonStatus: {
+    available: false,
+    eggRegular: false,
+    eggPeace:false,
+    eggCrack: false,
+    baby: false,
+    adult: false,
+    adultPeace: false,
+    adultWar: false,
+    adultRetire: false
   },
   filteredEntries: [
     // {
@@ -497,6 +511,27 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         filteredEntries: action.payload
       }
+
+    case INCUBATOR_LAUNCH_REG:
+      return {
+        ...state,
+        dragonStatus: {
+          available: true,
+          eggRegular: true,
+          eggPeace:false
+        }
+      };
+
+    case INCUBATOR_LAUNCH_PEACE:
+      return {
+        ...state,
+        dragonStatus: {
+          available: true,
+          eggRegular: false,
+          eggPeace: true
+      }
+    }
+
     default:
       return state;
   }
