@@ -3,7 +3,6 @@ import { Title } from './Home';
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { colors } from "../sharedStyles";
-import {Link} from 'react-router-dom';
 import {launchIncubatorRegular, launchIncubatorPeace} from '../actions';
 
 
@@ -141,7 +140,7 @@ class DragonLair extends Component {
                         </div>
                 </form> }
 
-                {this.state.endGame && <i class="fas fa-egg fa-2x" onClick={this.incubatorLaunch}></i>}
+                {this.state.endGame && !this.state.adultWar && <i class="fas fa-egg fa-2x" onClick={this.incubatorLaunch}></i>}
 
             </div>
         );
