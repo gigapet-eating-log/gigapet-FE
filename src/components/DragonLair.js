@@ -104,6 +104,7 @@ class DragonLair extends Component {
                     {this.state.adultPeace === true && <img src={require('../assets/Adult_Peace.gif')} alt="loading..." />}
                     {this.state.adultWar === true && <img src={require('../assets/Adult_War.gif')} alt="loading..." />}
                     {this.state.retirement === true && <img src={require('../assets/Adult_Retire.gif')} alt="loading..." />}
+                    
                 </div>
 
                 <GameFont>{this.state.message}</GameFont>
