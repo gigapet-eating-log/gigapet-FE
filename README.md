@@ -18,5 +18,5 @@
 
 # Links
 - [LandingPage] (https://romantic-poitras-3b09cb.netlify.com/about.html)
-- [GigaPet] (https://zen-dijkstra-f70fbd.netlify.com/signUp)
+- [GigaPet] (https://gigapetapp.netlify.com/signUp)
 
